@@ -2,126 +2,129 @@
     background-color: rgb(24, 24, 178);
     width: 100%;
     height: 1000px;
-    margin:0;
+    margin: 0;
     padding: 0;
     font-family: verdana;
 }
 
-    .container {
-        padding: 20px;
-        background-color: mediumseagreen;
-        height: 200px; 
-    }
-    .box {
-        margin-bottom: 80px;
-        margin-top: 10px;
-        margin-left: 50px;
-        background-color: #fdfefe; 
-        padding: 5px;
-        width: 94.5%;
-        height: 33px;
-        color: rgb(0, 0, 0);
-        border-radius: 60px;
-        font-size:40%;
-        font-family: Arial;
+.container {
+    padding: 20px;
+    background-color: mediumseagreen;
+    height: 200px;
 }
 
-    .team-box {
-        background-color: #000000; 
-        color: white;
-        padding: 5px;
-        margin-right: 10px;
-        width: 40px;
-        height: 23px;
-        border-radius: 50px;
-        position: absolute;
-        top: 34px;
-        right: 80px; 
-        margin-top: 10px;
-        font-family: arial;
-        cursor: pointer;
-    }
-        .team-box:hover {
-            background-color: #323261;
-        }
+.box {
+    margin-bottom: 80px;
+    margin-top: 10px;
+    margin-left: 50px;
+    background-color: #fdfefe;
+    padding: 5px;
+    width: 94.5%;
+    height: 33px;
+    color: rgb(0, 0, 0);
+    border-radius: 60px;
+    font-size: 40%;
+    font-family: Arial;
+}
 
-    .NYC h1 {
-        margin-top: 60px;
-        text-align: center;
-        color:rgb(255, 255, 255);
-        font-family: arial;
-        font-size: xx-large;
-    
-    }
-    .NYC p {
-        margin-top: -10px;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-        font-size: 12px;
-        color:rgb(255, 255, 255);
-        font-family: arial;
-    }
+#capstone {
+    padding-left: 20px;
+}
+
+.team-box {
+    background-color: #000000;
+    color: white;
+    padding: 5px;
+    margin-right: 10px;
+    width: 40px;
+    height: 23px;
+    border-radius: 50px;
+    position: absolute;
+    top: 34px;
+    right: 80px;
+    margin-top: 10px;
+    font-family: arial;
+    cursor: pointer;
+}
+
+.team-box:hover {
+    background-color: #323261;
+}
+
+.NYC h1 {
+    margin-top: 60px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    font-family: arial;
+    font-size: xx-large;
+
+}
+
+.NYC p {
+    margin-top: -10px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    font-family: arial;
+}
 
 .stats-table {
-    padding-top: 20px;
+    justify-items: center;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 10px;
+    background-color: green;
+    color: white;
+    font-size: larger;
+    font-family: arial;
+    /*padding-top: 20px;
     padding-bottom: 20px;
     width: 100%;
     height: 50px;
-    background-color: green;
-    color: white;
-    text-align: center;
-    font-size: larger;
-    font-family: arial;
-  }
-  
-    .stats-table th {
-      font-weight: bold;
-    }
+    text-align: center;*/
+}
+
+#head {
+    font-weight: bold;
+}
 
 .footer-text {
     background-color: #18912c;
     height: 100px;
 }
 
-    .footer-text h1 {
-        padding-top: 20px;
-        text-align: center;
-        color:rgb(255, 255, 255);
-        font-family: arial;
-        font-size: xx-large;
-    }
-    
-    .footer-text p {
-        margin-top: -10px;
-        text-align: center;
-        font-size: 12px;
-        color:rgb(255, 255, 255);
-        font-family: arial;
-    }
-
-.teams-table {
+.footer-text h1 {
     padding-top: 20px;
-    padding-bottom: 30px;
-    width: 100%;
-    height: 200px;
-    background-color: #18912c;
-    color: white;
     text-align: center;
-    font-size: larger;
+    color: rgb(255, 255, 255);
+    font-family: arial;
+    font-size: xx-large;
+}
+
+.footer-text p {
+    margin-top: -10px;
+    text-align: center;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
     font-family: arial;
 }
-  
-    .teams-table th {
-        font-weight: bold;
-    }
 
-    .teams-table td {
-        font-size: 15px;
-    }
-    
-    .teams-table img {
-        border-radius: 50%;
-        width: 70px;
-        height: 70px;
-    }
+.teams-table {
+    justify-items: center;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 10px;
+    background-color: #18912c;
+    color: white;
+    font-size: larger;
+    font-family: arial;
+    /*text-align: center;*/
+}
+
+.teams-table img {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+}
