@@ -156,7 +156,7 @@ body {
   line-height: 1.4;
   font-weight: 200;
   text-shadow: 1px 1px 3px rgba(1, 1, 3, 0.5);
-  /* mix-blend-mode: difference; */
+
 }
 
 .stats-table {
@@ -276,12 +276,15 @@ body {
 
 .chart-container h2 {
   color: var(--primary);
+  text-align: center;
 }
 
 .chart-container {
   display: flex;
+  justify-content: space-around;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
   text-align: center;
   margin-left: 20px;
   margin-right: 20px;
@@ -292,8 +295,8 @@ body {
   width: 100%;
   margin-bottom: 20px;
   background: white;
-  margin-top: 20px; 
-  padding: 30px; 
+  margin-top: 20px;
+  padding: 30px;
   border-radius: 10px;
   text-align: center;
   margin-left: 20px;
@@ -308,13 +311,58 @@ body {
   grid-gap: 10px;
 }
 
+.chart {
+  flex: 1;
+  min-width: 300px;
+  margin: 10px;
+  display: inline-block;
+}
 
+.chart-container p {
+  text-align: center;
+  color: #0e0e70;
+  font-size: larger;
+  margin-bottom: 20px;
+}
+
+.chart-label {
+  text-align: center;
+  margin-top: 5px;
+}
 
 .chartt {
+  display: table-row-group;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.2);
+  gap: 20px;
+  overflow: auto;
+}
+
+.chart-title-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.building {
   flex: 1;
-  background: white; 
-  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.2); 
-  grid-gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chartTrenBuilding1,
+.chartTrenBuilding2 {
+  width: 100%;
+  height: 100%;
+}
+
+.building canvas {
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
 }
 
 @media (max-width: 768px) {
@@ -323,11 +371,6 @@ body {
     align-items: center;
   }
 }
-
-
-
-
-
 
 
 .services {
