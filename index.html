@@ -11,6 +11,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="js/scriptt.js"></script>
 
+
 </head>
 
 <body>
@@ -76,82 +77,94 @@
     </div>
     <div class="chartt">
       <h2>TREN PER UNIT</h2>
-      <canvas id="ChartTrendPerUnit" width="400" height="100"></canvas>
-    </div>
-    <div class="chart">
-      <h2>TREN PER BUILDING CLASS</h2>
-      <canvas id="chartTrenBuilding" width="400" height="100"></canvas>
-    </div>
-  </div>
-
-
-  <!-- services -->
-  <div class="footer-text">
-    <h1>Our Teams</h1>
-    <p>Allow us to introduce ourselves</p>
-  </div>
-
-  <section class="services">
-    <div class="container">
-      <div class="team-grid">
-        <div class="team-leader">
-          <div class="icon"><i class="fas fa-user"><img src="images/raihan.png"></i></div>
-          <h4>Raihan Fadhilah</h4>
-          <p>Team Leader</p>
-        </div>
-        <div class="team-member">
-          <div class="icon"><i class="fas fa-user"><img src="images/Habsi.jpg"></i></div>
-          <h4>Habsi Bintang</h4>
-          <p>Front End Engineer</p>
-        </div>
-        <div class="team-member">
-          <div class="icon"><i class="fas fa-user"></i></div>
-          <h4>Pepep Febriansyah</h4>
-          <p>Front End Engineer</p>
-        </div>
-        <div class="team-member">
-          <div class="icon"><i class="fas fa-user"><img src="images/ulfii.png"></i></div>
-          <h4>Ulfitasari</h4>
-          <p>Front End Engineer</p>
-        </div>
-        <div class="team-member">
-          <div class="icon"><i class="fas fa-user"><img src="images/Yusuf.png"></i></div>
-          <h4>Yusuf Habibulloh</h4>
-          <p>Front End Engineer</p>
-        </div>
-        <div class="team-member">
-          <div class="icon"><i class="fas fa-user"><img src="images/Vanka.jpg"></i></div>
-          <h4>Vanka Alba</h4>
-          <p>Deployment Team</p>
-        </div>
-        <div class="team-member">
-          <div class="icon"><i class="fas fa-user"><img src="images/ida.png"></i></div>
-          <h4>Ida Masluha</h4>
-          <p>Pitch Deck Team</p>
-        </div>
-        <div class="team-member">
-          <div class="icon"><i class="fas fa-user"><img src="images/lova.jpeg"></i></div>
-          <h4>Ravitilova</h4>
-          <p>Pitch Deck Team</p>
-        </div>
-        <div class="team-member">
-          <div class="icon"><i class="fas fa-user"><img src="images/shalsa.jpeg"></i></div>
-          <h4>Shalsa Salisa Az Zahra</h4>
-          <p>Pitch Deck Team</p>
-        </div>
-        <div class="team-member">
-          <div class="icon"><i class="fas fa-user"><img src="images/fidela.jpg"></i></div>
-          <h4>Fidela Citra Imanda</h4>
-          <p>Quality Assurance</p>
-        </div>
-        <div class="team-member">
-          <div class="icon"><i class="fas fa-user"><img src="images/Muhdad.jpg"></i></div>
-          <h4>Muhdad Alfaris Bachmid</h4>
-          <p>Quality Assurance</p>
-        </div>
+      <div class="chart-container" style="display: flex; justify-content: space-around;">
+        <canvas id="ChartTrendPerUnit" width="300" height="70"></canvas>
+        <canvas id="ChartTrendPerUnit2" width="300" height="70"></canvas>
+        <canvas id="ChartTrendPerUnit3" width="300" height="70"></canvas>
       </div>
     </div>
-  </section>
+
+    <div class="chartt">
+      <h2>TREN PER BUILDING</h2>
+      <div class="chart-container" style="display: flex; justify-content: space-around;">
+        <canvas id="chartTrenBuilding1" width="300" height="70"></canvas>
+        <canvas id="chartTrenBuilding2" width="300" height="70"></canvas>
+        <canvas id="chartTrenBuilding3" width="300" height="70"></canvas>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- services -->
+  <div>
+    <div class="footer-text">
+      <h1>Our Teams</h1>
+      <p>Allow us to introduce ourselves</p>
+    </div>
+
+    <section class="services">
+      <div class="container">
+        <div class="team-grid">
+          <div class="team-leader">
+            <div class="icon"><i class="fas fa-user"><img src="images/raihan.png"></i></div>
+            <h4>Raihan Fadhilah</h4>
+            <p>Team Leader</p>
+          </div>
+          <div class="team-member">
+            <div class="icon"><i class="fas fa-user"><img src="images/Habsi.jpg"></i></div>
+            <h4>Habsi Bintang</h4>
+            <p>Front End Engineer</p>
+          </div>
+          <div class="team-member">
+            <div class="icon"><i class="fas fa-user"></i></div>
+            <h4>Pepep Febriansyah</h4>
+            <p>Front End Engineer</p>
+          </div>
+          <div class="team-member">
+            <div class="icon"><i class="fas fa-user"><img src="images/ulfii.png"></i></div>
+            <h4>Ulfitasari</h4>
+            <p>Front End Engineer</p>
+          </div>
+          <div class="team-member">
+            <div class="icon"><i class="fas fa-user"><img src="images/Yusuf.png"></i></div>
+            <h4>Yusuf Habibulloh</h4>
+            <p>Front End Engineer</p>
+          </div>
+          <div class="team-member">
+            <div class="icon"><i class="fas fa-user"><img src="images/Vanka.jpg"></i></div>
+            <h4>Vanka Alba</h4>
+            <p>Deployment Team</p>
+          </div>
+          <div class="team-member">
+            <div class="icon"><i class="fas fa-user"><img src="images/ida.png"></i></div>
+            <h4>Ida Masluha</h4>
+            <p>Pitch Deck Team</p>
+          </div>
+          <div class="team-member">
+            <div class="icon"><i class="fas fa-user"><img src="images/lova.jpeg"></i></div>
+            <h4>Ravitilova</h4>
+            <p>Pitch Deck Team</p>
+          </div>
+          <div class="team-member">
+            <div class="icon"><i class="fas fa-user"><img src="images/shalsa.jpeg"></i></div>
+            <h4>Shalsa Salisa Az Zahra</h4>
+            <p>Pitch Deck Team</p>
+          </div>
+          <div class="team-member">
+            <div class="icon"><i class="fas fa-user"><img src="images/fidela.jpg"></i></div>
+            <h4>Fidela Citra Imanda</h4>
+            <p>Quality Assurance</p>
+          </div>
+          <div class="team-member">
+            <div class="icon"><i class="fas fa-user"><img src="images/Muhdad.jpg"></i></div>
+            <h4>Muhdad Alfaris Bachmid</h4>
+            <p>Quality Assurance</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <!-- footer Start -->
   <footer>
@@ -161,7 +174,7 @@
   </footer>
   <!-- footer End -->
 
-  </div>
+
 </body>
 
 </html>
