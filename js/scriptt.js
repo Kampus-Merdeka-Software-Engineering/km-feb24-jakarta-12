@@ -458,12 +458,7 @@ function displayTrenBuilding(chartId, chartData, label) {
                         text: 'Total Sales'
                     }
                 },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Building Class'
-                    }
-                }
+
             }
         }
     });

@@ -169,8 +169,8 @@ body {
   border: 1px solid var(--primary);
   color: var(--primary);
   padding: 10px;
-  margin-bottom: 50px;
-  margin-top: 50px;
+  margin-bottom: 20px;
+  margin-top: 20px;
   margin-left: 20px;
   margin-right: 20px;
   text-align: center;
@@ -209,7 +209,7 @@ body {
 }
 
 .footer-text h1 {
-  padding-top: 20px;
+  padding-top: 10px;
   text-align: center;
   color: var(--bg);
   font-family: "Poppins", sans-serif;
@@ -295,26 +295,25 @@ body {
   width: 100%;
   margin-bottom: 20px;
   background: white;
-  margin-top: 20px;
   padding: 30px;
   border-radius: 10px;
   text-align: center;
-  margin-left: 20px;
-  margin-right: 20px;
 }
 
 .charts {
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  width: 100%;
+
   grid-template-columns: 2 fr 1 fr;
   grid-gap: 10px;
 }
 
 .chart {
+  justify-content: center;
   flex: 1;
   min-width: 300px;
-  margin: 10px;
+
   display: inline-block;
 }
 
@@ -327,7 +326,6 @@ body {
 
 .chart-label {
   text-align: center;
-  margin-top: 5px;
 }
 
 .chartt {
@@ -342,7 +340,7 @@ body {
 
 .chart-title-container {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .building {
@@ -355,21 +353,21 @@ body {
 .chartTrenBuilding1,
 .chartTrenBuilding2 {
   width: 100%;
-  height: 100%;
 }
 
 .building canvas {
-  margin-bottom: 10px;
   width: 100%;
-  max-width: 100%;
-  height: auto;
 }
 
+@media (min-width:800px) {
+  
+}
 @media (max-width: 768px) {
   .charts {
     flex-direction: column;
     align-items: center;
   }
+  
 }
 
 
@@ -425,7 +423,6 @@ footer {
   text-align: center;
   padding: 1rem 0;
   margin-top: 20px;
-  padding-bottom: 2rem;
   justify-items: center;
   display: grid;
   position: relative;
@@ -435,4 +432,8 @@ footer {
 footer .credit span {
   color: var(--bg);
   font-weight: 700;
+}
+
+.footer-text {
+  margin-bottom: 20px;
 }
