@@ -1,5 +1,5 @@
-const file = "https://raw.githubusercontent.com/Jakarta-Team12/NYC-dataset/main/csvjson.json";
-let barchart=null;
+const file = "https://raw.githubusercontent.com/Jakarta-Team12/NYC-dataset/main/csvjson2.json";
+let barchart = null;
 
 async function getData() {
     const response = await fetch(file);
@@ -47,22 +47,26 @@ function processTotalSalesByBorough(data) {
         datasets: [{
             data: arrayBorough.map(item => item.y),
             label: 'Sales Total',
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: [
+                'rgba(70, 130, 180, 1)',  
+            ],
+            borderColor: [
+                'rgba(0, 0, 139, 1)',      
+            ],
             borderWidth: 1
         }]
     };
 }
 
 function processSalesTrendDataForStatenIsland(data) {
-
     const statenIslandData = data.filter(item => item.BOROUGH_NAME === 'Staten Island');
     console.log("Staten Island Data:", statenIslandData);
 
     const salesByMonth = {};
 
     statenIslandData.forEach(item => {
-        const monthYear = item.MON_YYYY;
+        const [month, year] = item.MON_YYYY.split('-');
+        const monthYear = `${month}-${parseInt(year) < 50 ? 20 : 19}${year}`;
         const totalSales = parseFloat(item.TOTAL_SALES);
         if (!salesByMonth[monthYear]) {
             salesByMonth[monthYear] = 0;
@@ -76,16 +80,20 @@ function processSalesTrendDataForStatenIsland(data) {
         month: key,
         sales: salesByMonth[key]
     })).sort((a, b) => {
-        const [monthA, yearA] = a.month.split('_');
-        const [monthB, yearB] = b.month.split('_');
-        const dateA = new Date(`${monthA} 1, ${yearA}`);
-        const dateB = new Date(`${monthB} 1, ${yearB}`);
-        return dateA - dateB;
+        const [monthA, yearA] = a.month.split('-');
+        const [monthB, yearB] = b.month.split('-');
+        const dateA = new Date(`${yearA}-${monthA}-01`);
+        const dateB = new Date(`${yearB}-${monthB}-01`);
+        if (dateA.getFullYear() !== dateB.getFullYear()) {
+            return dateA.getFullYear() - dateB.getFullYear();
+        } else {
+            return dateA.getMonth() - dateB.getMonth();
+        }
     });
 
     console.log("Sorted Sales Data:", sortedSalesData);
 
-    const labels = sortedSalesData.map(item => item.month.replace('_', ' '));
+    const labels = sortedSalesData.map(item => item.month);
     const dataValues = sortedSalesData.map(item => item.sales);
 
     console.log("Labels:", labels);
@@ -94,7 +102,7 @@ function processSalesTrendDataForStatenIsland(data) {
     return {
         labels: labels,
         datasets: [{
-            label: 'Sales Trend',
+            label: 'Total Sales',
             data: dataValues,
             borderColor: 'rgba(75, 192, 192, 1)',
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -104,73 +112,15 @@ function processSalesTrendDataForStatenIsland(data) {
     };
 }
 
-function processComparisonDataForStatenIsland(data) {
-    const monthsToCompare = ['Feb_2017', 'Mar_2017', 'May_2017', 'Jun_2017', 'Jul_2017', 'Aug_2017'];
-    const filteredData = data.filter(item =>
-        item.BOROUGH_NAME === 'Staten Island' && monthsToCompare.includes(item.MON_YYYY)
-    );
-
-    const salePriceByMonth = {};
-    const residentialUnitByMonth = {};
-
-    filteredData.forEach(item => {
-        const monthYear = item.MON_YYYY;
-        const totalSalePrice = parseFloat(item.TOTAL_SALE_PRICE);
-        const totalResidentialUnit = parseInt(item.RESIDENTIAL_UNITS);
-
-        if (!salePriceByMonth[monthYear]) {
-            salePriceByMonth[monthYear] = 0;
-        }
-        if (!residentialUnitByMonth[monthYear]) {
-            residentialUnitByMonth[monthYear] = 0;
-        }
-
-        salePriceByMonth[monthYear] += totalSalePrice;
-        residentialUnitByMonth[monthYear] += totalResidentialUnit;
-    });
-
-    // Sort the months in chronological order
-    const sortedMonths = Object.keys(salePriceByMonth).sort((a, b) => {
-        const [monthA, yearA] = a.split('_');
-        const [monthB, yearB] = b.split('_');
-        const dateA = new Date(`${monthA} 1, ${yearA}`);
-        const dateB = new Date(`${monthB} 1, ${yearB}`);
-        return dateA - dateB;
-    });
-
-    const labels = sortedMonths.map(item => item.replace('_', ' '));
-    const salePriceValues = sortedMonths.map(month => salePriceByMonth[month]);
-    const residentialUnitValues = sortedMonths.map(month => residentialUnitByMonth[month]);
-
-    return {
-        labels: labels,
-        datasets: [
-            {
-                label: 'Total Sale Price',
-                data: salePriceValues,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            },
-            {
-                label: 'Total Residential Unit',
-                data: residentialUnitValues,
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }
-        ]
-    };
-}
 
 function displayBarChart(canvasId, chartData) {
-    if (barchart!=null){
+    if (barchart != null) {
         barchart.destroy();
     }
-    
+
     const ctx = document.getElementById(canvasId);
-    
-    barchart=new Chart(ctx, {
+
+    barchart = new Chart(ctx, {
         type: 'bar',
         data: chartData,
         options: {
@@ -213,7 +163,9 @@ function displayComparisonBarChart(canvasId, chartData) {
 }
 
 function processTop5BuildingClass(data) {
-    const listBuildingClass = data.reduce((acc, item) => {
+    const statenIslandData = data.filter(item => item.BOROUGH_NAME === 'Staten Island');
+
+    const listBuildingClass = statenIslandData.reduce((acc, item) => {
         const key = item.BUILDING_CLASS_CATEGORY;
         if (!acc[key]) acc[key] = 0;
         acc[key] += item.TOTAL_SALES;
@@ -255,112 +207,112 @@ function displayPieChart(canvasId, chartData) {
         type: 'pie',
         data: chartData,
         options: {
-            responsive: true
-        }
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+
+                },
+            },
+        },
     });
 }
 
 
 
 
-//grafik tren per unit//
+/*-------------sales total per unit------------------*/
+
+
+
 document.addEventListener("DOMContentLoaded", async (event) => {
     const data = await getData();
-    console.log(data);
 
-    const dataFebMar = data.filter(item => {
-        const date = new Date(item.SALE_DATE);
-        return date.getMonth() === 1 || date.getMonth() === 2;
-    });
+    const filterDataByMonth = (data, months) => {
+        return data.filter(({ BOROUGH_NAME, MON_YYYY }) => {
+            const [month, year] = MON_YYYY.split('-');
+            const monthIndex = new Date(`${month} 1, ${year}`).getMonth() + 1;
+            return BOROUGH_NAME === 'Staten Island' && months.includes(monthIndex);
+        });
+    };
 
-    let totalSalesCommercialFebMar = 0;
-    let totalSalesResidentialFebMar = 0;
-    dataFebMar.forEach(item => {
-        if (item.BUILDING_CLASS_CATEGORY.includes("COMMERCIAL")) {
-            totalSalesCommercialFebMar += item.TOTAL_SALES;
-        } else if (item.BUILDING_CLASS_CATEGORY.includes("RESIDENTIAL")) {
-            totalSalesResidentialFebMar += item.TOTAL_SALES;
-        }
-    });
+    const calculateTotalSales = (data) => {
+        return {
+            commercial: data.reduce((total, item) => total + (item.COMMERCIAL_SALES || 0), 0),
+            residential: data.reduce((total, item) => total + (item.RESIDENTIAL_SALES || 0), 0),
+        };
+    };
 
-    console.log("Total Sales - Commercial (Feb-Mar):", totalSalesCommercialFebMar);
-    console.log("Total Sales - Residential (Feb-Mar):", totalSalesResidentialFebMar);
+    const filteredDataFebMar = filterDataByMonth(data, [2, 3]);
+    const totalSalesFebMar = calculateTotalSales(filteredDataFebMar);
 
-    displayTotalSalesByUnit('ChartTrendPerUnit', totalSalesCommercialFebMar, totalSalesResidentialFebMar, 'Feb-Mar');
-    const dataMayJun = data.filter(item => {
-        const date = new Date(item.SALE_DATE);
-        return date.getMonth() === 4 || date.getMonth() === 5;
-    });
+    const filteredDataMayJun = filterDataByMonth(data, [5, 6]);
+    const totalSalesMayJun = calculateTotalSales(filteredDataMayJun);
 
-    let totalSalesCommercialMayJun = 0;
-    let totalSalesResidentialMayJun = 0;
-    dataMayJun.forEach(item => {
-        if (item.BUILDING_CLASS_CATEGORY.includes("COMMERCIAL")) {
-            totalSalesCommercialMayJun += item.TOTAL_SALES;
-        } else if (item.BUILDING_CLASS_CATEGORY.includes("RESIDENTIAL")) {
-            totalSalesResidentialMayJun += item.TOTAL_SALES;
-        }
-    });
+    const filteredDataJulAug = filterDataByMonth(data, [7, 8]);
+    const totalSalesJulAug = calculateTotalSales(filteredDataJulAug);
 
-    console.log("Total Sales - Commercial (May-Jun):", totalSalesCommercialMayJun);
-    console.log("Total Sales - Residential (May-Jun):", totalSalesResidentialMayJun);
-
-    displayTotalSalesByUnit('ChartTrendPerUnit2', totalSalesCommercialMayJun, totalSalesResidentialMayJun, 'May-Jun');
-
-    const dataJulAug = data.filter(item => {
-        const date = new Date(item.SALE_DATE);
-        return date.getMonth() === 6 || date.getMonth() === 7;
-    });
-
-    let totalSalesCommercialJulAug = 0;
-    let totalSalesResidentialJulAug = 0;
-    dataJulAug.forEach(item => {
-        if (item.BUILDING_CLASS_CATEGORY.includes("COMMERCIAL")) {
-            totalSalesCommercialJulAug += item.TOTAL_SALES;
-        } else if (item.BUILDING_CLASS_CATEGORY.includes("RESIDENTIAL")) {
-            totalSalesResidentialJulAug += item.TOTAL_SALES;
-        }
-    });
-
-    console.log("Total Sales - Commercial (Jul-Aug):", totalSalesCommercialJulAug);
-    console.log("Total Sales - Residential (Jul-Aug):", totalSalesResidentialJulAug);
-
-    displayTotalSalesByUnit('ChartTrendPerUnit3', totalSalesCommercialJulAug, totalSalesResidentialJulAug, 'Jul-Aug');
+    displayTotalSalesByUnit('ChartTrendPerUnit', [
+        { label: 'Feb-Mar', commercial: totalSalesFebMar.commercial, residential: totalSalesFebMar.residential },
+        { label: 'May-Jun', commercial: totalSalesMayJun.commercial, residential: totalSalesMayJun.residential },
+        { label: 'Jul-Aug', commercial: totalSalesJulAug.commercial, residential: totalSalesJulAug.residential }
+    ]);
 });
 
-function displayTotalSalesByUnit(canvasId, totalSalesCommercial, totalSalesResidential, periodLabel) {
+function displayTotalSalesByUnit(canvasId, dataSets) {
     const ctx = document.getElementById(canvasId).getContext('2d');
 
-    new Chart(ctx, {
+    const labels = dataSets.map(item => item.label);
+    const commercialData = dataSets.map(item => item.commercial);
+    const residentialData = dataSets.map(item => item.residential);
+
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Commercial Sales',
+                data: commercialData,
+                backgroundColor: '#0e0e70',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Residential Sales',
+                data: residentialData,
+                backgroundColor: '#a5a7f8',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }
+        ]
+    };
+
+    const config = {
         type: 'bar',
-        data: {
-            labels: [periodLabel],
-            datasets: [
-                {
-                    label: 'Commercial',
-                    data: [totalSalesCommercial],
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)'
-                },
-                {
-                    label: 'Residential',
-                    data: [totalSalesResidential],
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)'
-                }
-            ]
-        },
+        data: data,
         options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+            },
             scales: {
                 y: {
-                    beginAtZero: true
-                }
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Total Sales'
+                    }
+                },
             }
         }
-    });
+    };
+
+    new Chart(ctx, config);
 }
 
 
-//grafik tren per building//
-
+/*-------------sales total per building------------------*/
 
 document.addEventListener("DOMContentLoaded", async (event) => {
     const data = await getData();
@@ -482,3 +434,174 @@ if (!Object.groupBy) {
         }, {});
     };
 }
+
+
+
+
+/*---------------*/
+
+const itemsPerPage = 10; 
+let currentPage = 1; 
+const maxButtons = 4;
+let sortDirection = '';
+let currentSortColumn = '';
+
+async function getData() {
+    const response = await fetch(file);
+    const body = await response.json();
+    return body;
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const data = await getData();
+    let sortedData = data.slice();
+    const tableBody = document.getElementById('table-body');
+    const pagination = document.getElementById('pagination');
+    const tableSearchInput = document.getElementById('table-search-input');
+    const sortSaleDateHeader = document.getElementById('sort-sale-date');
+    const sortBuildingClassHeader = document.getElementById('sort-building-class');
+    const sortResidentialUnitsHeader = document.getElementById('sort-residential-units');
+    const sortCommercialUnitsHeader = document.getElementById('sort-commercial-units');
+    const sortTotalSalesHeader = document.getElementById('sort-total-sales');
+
+
+    function handleSearchData(event) {
+        const value = event.target.value.trim().toLowerCase();
+        sortedData = data.filter(item => item["SALE_DATE"].toLowerCase().includes(value));
+        currentPage = 1; 
+        displayItems();
+        displayPagination();
+    }
+
+
+    function displayItems() {
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const paginatedItems = sortedData.slice(start, end);
+
+        tableBody.innerHTML = '';
+        paginatedItems.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item["SALE_DATE"]}</td>
+                <td>${item["BUILDING_CLASS_CATEGORY"]}</td>
+                <td>${item["RESIDENTIAL_UNITS"]}</td>
+                <td>${item["COMMERCIAL_UNITS"]}</td>
+                <td>${item["TOTAL_SALES"]}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+
+    function sortByColumn(column) {
+        if (currentSortColumn === column) {
+            sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortDirection = 'asc';
+            currentSortColumn = column;
+        }
+
+        sortedData.sort((a, b) => {
+            const valueA = a[column];
+            const valueB = b[column];
+            if (typeof valueA === 'number' && typeof valueB === 'number') {
+                if (sortDirection === 'asc') {
+                    return valueA - valueB;
+                } else {
+                    return valueB - valueA;
+                }
+            } else {
+                if (sortDirection === 'asc') {
+                    return valueA.toString().localeCompare(valueB.toString());
+                } else {
+                    return valueB.toString().localeCompare(valueA.toString());
+                }
+            }
+        });
+
+        currentPage = 1; 
+        displayItems();
+        displayPagination();
+        updateSortIcon(column);
+    }
+
+   
+    function updateSortIcon(column) {
+        const sortIcons = {
+            'SALE_DATE': document.getElementById('sort-icon-sale-date'),
+            'BUILDING_CLASS_CATEGORY': document.getElementById('sort-icon-building-class'),
+            'RESIDENTIAL_UNITS': document.getElementById('sort-icon-residential-units'),
+            'COMMERCIAL_UNITS': document.getElementById('sort-icon-commercial-units'),
+            'TOTAL_SALES': document.getElementById('sort-icon-total-sales')
+        };
+        
+        Object.keys(sortIcons).forEach(key => {
+            sortIcons[key].innerHTML = '';
+        });
+        
+        if (sortIcons[column]) {
+            sortIcons[column].innerHTML = sortDirection === 'asc' ? ' &#x25B2;' : ' &#x25BC;';
+        }
+    }
+
+      
+    function displayPagination() {
+        const totalPages = Math.ceil(sortedData.length / itemsPerPage);
+        pagination.innerHTML = '';
+        const startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+        const endPage = Math.min(totalPages, startPage + maxButtons - 1);
+
+        if (startPage > 1) {
+            pagination.appendChild(createPaginationButton('Prev', currentPage - 1));
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            pagination.appendChild(createPaginationButton(i, i));
+        }
+
+        if (endPage < totalPages) {
+            pagination.appendChild(createPaginationButton('Next', currentPage + 1));
+        }
+    }
+
+    function createPaginationButton(label, pageNumber) {
+        const button = document.createElement('button');
+        button.textContent = label;
+        if (pageNumber === currentPage) {
+            button.classList.add('active');
+        }
+        button.addEventListener('click', () => {
+            currentPage = pageNumber;
+            displayItems();
+            displayPagination();
+        });
+        return button;
+    }
+
+    displayItems();
+    displayPagination();
+
+  
+    sortSaleDateHeader.addEventListener('click', () => {
+        sortByColumn('SALE_DATE');
+    });
+
+    sortBuildingClassHeader.addEventListener('click', () => {
+        sortByColumn('BUILDING_CLASS_CATEGORY');
+    });
+
+    sortResidentialUnitsHeader.addEventListener('click', () => {
+        sortByColumn('RESIDENTIAL_UNITS');
+    });
+
+    sortCommercialUnitsHeader.addEventListener('click', () => {
+        sortByColumn('COMMERCIAL_UNITS');
+    });
+
+    sortTotalSalesHeader.addEventListener('click', () => {
+        sortByColumn('TOTAL_SALES');
+    });
+
+    tableSearchInput.addEventListener('input', handleSearchData);
+});
