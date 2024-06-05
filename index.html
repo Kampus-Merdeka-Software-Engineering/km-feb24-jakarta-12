@@ -10,8 +10,9 @@
   <link rel="stylesheet" href="css/style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="js/script.js"></script>
-
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -21,14 +22,69 @@
 
     <div class="navbar-nav">
       <div class="dropdown">
-        <a href="#Date" class="dropbtn">Date &#9662;</a>
+     <a href="#Date" class="dropbtn">Date &#9662;</a>
         <div class="dropdown-content">
+          <label><input type="checkbox" value="September 2016"> September 2016</label>
+          <label><input type="checkbox" value="October 2016"> October 2016</label>
+          <label><input type="checkbox" value="November 2016"> November 2016</label>
+          <label><input type="checkbox" value="December 2016"> December 2016</label>
+          <label><input type="checkbox" value="January 2017"> January 2017</label>
+          <label><input type="checkbox" value="February 2017"> February 2017</label>
+          <label><input type="checkbox" value="March 2017"> March 2017</label>
+          <label><input type="checkbox" value="April 2017"> April 2017</label>
+          <label><input type="checkbox" value="May 2017"> May 2017</label>
+          <label><input type="checkbox" value="June 2017"> June 2017</label>
+          <label><input type="checkbox" value="July 2017"> July 2017</label>
+          <label><input type="checkbox" value="August 2017"> August 2017</label>
         </div>
       </div>
-      <a href="#Borough" class="dropbtn">Borough &#9662;</a>
-      <div class="dropdown-content">
+    
+      <div class="dropdown">
+        <a href="#Building" class="dropbtn">Building Class Category &#9662;</a>
+        <div class="dropdown-content">
+          <label><input type="checkbox" value="01"> 01</label>
+          <label><input type="checkbox" value="02"> 02</label>
+          <label><input type="checkbox" value="03"> 03</label>
+        
       </div>
+      </div>
+    
+      <button class="button" width="20px">Add Filter</button>
     </div>
+  </div>
+        <!--<p href="#Date" class="dropbtn">Date &#9662;</p>
+        <div class="dropdown-content">
+          <a href="#Sept2016">September 2016</a>
+          <a href="#Oct2016">Oktober 2016</a>
+          <a href="#Nov2016">November 2016</a>
+          <a href="#Dec2016">Desember 2016</a>
+          <a href="#Jan2017">Januari 2017</a>
+          <a href="#Feb2017">Februari 2017</a>
+          <a href="#Mar2017">Maret 2017</a>
+          <a href="#Apr2017">April 2017</a>
+          <a href="#May2017">Mei 2017</a>
+          <a href="#Jun2017">Juni 2017</a>
+          <a href="#Jul2017">Juli 2017</a>
+          <a href="#Aug2017">Agustus 2017</a>
+        </div>
+      </div> 
+      <div class="dropdown">
+        <a href="#BuildingClassCategory" class="dropbtn">Building Class Category &#9662;</a>
+        <div class="dropdown-content">
+          <a href="#A">A</a>
+          <a href="#B">B</a>
+          <a href="#C">C</a>
+          <a href="#D">D</a>
+          <a href="#E">E</a>
+          <a href="#F">F</a>
+          <a href="#G">G</a>
+          <a href="#H">H</a>
+          <a href="#I">I</a>
+          <a href="#J">J</a>
+        </div>
+      </div>
+    </div>!-->
+    
   </nav>
   <!-- navbar end -->
 
@@ -48,51 +104,75 @@
   <div class="stats-table">
     <div class="item">
       <h4>Total Sales Staten Island</h4>
-      <p>3.266.810.855</p>
+      <p>4,727,354,272</p>
     </div>
     <div class="item">
-      <h4>Total Residensial Unit</h4>
-      <p>4.771</p>
+      <h4>Residential Units</h4>
+      <p>7,509</p>
     </div>
     <div class="item">
-      <h4>Total Sales Residensial Unit</h4>
-      <p>1.578.032.728</p>
+      <h4>Commercial Units</h4>
+      <p>501</p>
+    </div>
+    <div class="item">
+      <h4>Building Class</h4>
+      <p>26</p>
     </div>
   </div>
 
-  <div class="chart-container" >
+  <div class="chart-container">
     <div class="chart">
       <h2>SALES TOTAL PER BOROUGH</h2>
-      <canvas id="chartTotalSalesByBorough" height="50px"></canvas>
+      <canvas id="chartTotalSalesByBorough" height="80px"></canvas>
     </div>
     <div class="charts">
       <div class="chartt">
         <h2>SALES TREND PER MONTH</h2>
-        <canvas id="lineChartSalesTrend"></canvas>
+        <canvas id="lineChartSalesTrend" height="150px"></canvas>
       </div>
       <div class="chartt">
         <h2>TOP 5 BUILDING CLASS</h2>
-        <canvas id="PieChartTop5" height="50px"></canvas>
+        <canvas id="PieChartTop5" height="150px"></canvas>
       </div>
     </div>
     <div class="chartt">
-      <h2>SALES TREND PER UNIT TYPE</h2>
-      <div class="chart-container" style="display: flex; justify-content: space-around;">
-        <canvas class="chart-size" id="ChartTrendPerUnit" height="50px"></canvas>
-        <canvas class="chart-size" id="ChartTrendPerUnit2" height="50px"></canvas>
-        <canvas class="chart-size" id="ChartTrendPerUnit3" height="50px"></canvas>
+      <h2>SALES TOTAL PER UNIT TYPE</h2>
+      <div class="chart-container">
+        <canvas class="chart-size" id="ChartTrendPerUnit" height="80px"></canvas>
       </div>
     </div>
 
-    <div class="chartt">
-      <h2>SALES TREND PER BUILDING</h2>
-      <div class="chart-container" style="display: flex; justify-content: space-around;">
-        <canvas class="chart-size" id="chartTrenBuilding1" height="50px"></canvas>
-        <canvas class="chart-size" id="chartTrenBuilding2" height="50px"></canvas>
-        <canvas class="chart-size" id="chartTrenBuilding3" height="50px"></canvas>
+      <h1>SALES TOTAL PER BUILDING CLASS CATEGORY</h1>
+      <div class="char">
+        <div class="chartt">
+        <canvas class="chart-size" id="chartTrenBuilding1" height="250px"></canvas>
+      </div>
+      <div class="chartt">
+        <canvas class="chart-size" id="chartTrenBuilding2" height="250px"></canvas>
+      </div>
+      <div class="chartt">
+        <canvas class="chart-size" id="chartTrenBuilding3" height="250px"></canvas>
       </div>
     </div>
-  </div>
+</div>
+
+<article id="product-table">
+  <input type="text" id="table-search-input" placeholder="Search Product Detail">
+  <table>
+    <h2>Table Data</h2>
+    <thead>
+      <tr>
+        <th id="sort-id">ID <span id="sort-icon-id"></span></th>
+            <th id="sort-category">Building Class Category <span id="sort-icon-category"></span></th>
+            <th id="sort-type">Residential Unit <span id="sort-icon-type"></span></th>
+            <th id="sort-type2">Commercial Unit <span id="sort-icon-detail"></span></th>
+            <th id="sort-total-penjualan">Total Sales <span id="sort-icon-penjualan"></span></th>
+        </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+  <div id="pagination" class="pagination"></div>
+</article>
+
 
   <!-- services -->
   <div>
