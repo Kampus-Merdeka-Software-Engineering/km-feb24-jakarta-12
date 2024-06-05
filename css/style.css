@@ -431,6 +431,11 @@ th {
   color: white;
 }
 
+td {
+  color: var(--primary);
+  text-align: center;
+}
+
 .pagination {
   margin-top: 10px;
   text-align: center;
