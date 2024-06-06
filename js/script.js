@@ -11,12 +11,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     const data = await getData();
     console.log(data);
 
+    //total sales per borough
+    const boroughData = processTotalSalesByBorough(data);
+    displayBarChart('chartTotalSalesByBorough', boroughData);
+
+    // sales trend per month for Staten Island
+    const salesTrendData = processSalesTrendDataForStatenIsland(data);
+    displayLineChart('lineChartSalesTrend', salesTrendData);
+
+    //  top 5 building class
+    const buildingClassData = processTop5BuildingClass(data);
+    displayPieChart('PieChartTop5', buildingClassData);
+
+    //  sale price and residential unit
+    const comparisonData = processComparisonDataForStatenIsland(data);
+    displayComparisonBarChart('chartComparison', comparisonData);
 });
-
-
-//total sales per borough
-const boroughData = processTotalSalesByBorough(data);
-displayBarChart('chartTotalSalesByBorough', boroughData);
 
 function processTotalSalesByBorough(data) {
     const listBorough = data.reduce((acc, item) => {
@@ -47,10 +57,6 @@ function processTotalSalesByBorough(data) {
         }]
     };
 }
-
- // sales trend per month for Staten Island
- const salesTrendData = processSalesTrendDataForStatenIsland(data);
- displayLineChart('lineChartSalesTrend', salesTrendData);
 
 function processSalesTrendDataForStatenIsland(data) {
     const statenIslandData = data.filter(item => item.BOROUGH_NAME === 'Staten Island');
@@ -155,12 +161,6 @@ function displayComparisonBarChart(canvasId, chartData) {
         }
     });
 }
-
-
-//  top 5 building class
-const buildingClassData = processTop5BuildingClass(data);
-displayPieChart('PieChartTop5', buildingClassData);
-
 
 function processTop5BuildingClass(data) {
     const statenIslandData = data.filter(item => item.BOROUGH_NAME === 'Staten Island');
