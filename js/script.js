@@ -11,22 +11,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const data = await getData();
     console.log(data);
 
-    //total sales per borough
-    const boroughData = processTotalSalesByBorough(data);
-    displayBarChart('chartTotalSalesByBorough', boroughData);
-
-    // sales trend per month for Staten Island
-    const salesTrendData = processSalesTrendDataForStatenIsland(data);
-    displayLineChart('lineChartSalesTrend', salesTrendData);
-
-    //  top 5 building class
-    const buildingClassData = processTop5BuildingClass(data);
-    displayPieChart('PieChartTop5', buildingClassData);
-
-    //  sale price and residential unit
-    const comparisonData = processComparisonDataForStatenIsland(data);
-    displayComparisonBarChart('chartComparison', comparisonData);
 });
+
+
+//total sales per borough
+const boroughData = processTotalSalesByBorough(data);
+displayBarChart('chartTotalSalesByBorough', boroughData);
 
 function processTotalSalesByBorough(data) {
     const listBorough = data.reduce((acc, item) => {
@@ -57,6 +47,10 @@ function processTotalSalesByBorough(data) {
         }]
     };
 }
+
+ // sales trend per month for Staten Island
+ const salesTrendData = processSalesTrendDataForStatenIsland(data);
+ displayLineChart('lineChartSalesTrend', salesTrendData);
 
 function processSalesTrendDataForStatenIsland(data) {
     const statenIslandData = data.filter(item => item.BOROUGH_NAME === 'Staten Island');
@@ -162,6 +156,12 @@ function displayComparisonBarChart(canvasId, chartData) {
     });
 }
 
+
+//  top 5 building class
+const buildingClassData = processTop5BuildingClass(data);
+displayPieChart('PieChartTop5', buildingClassData);
+
+
 function processTop5BuildingClass(data) {
     const statenIslandData = data.filter(item => item.BOROUGH_NAME === 'Staten Island');
 
@@ -224,6 +224,11 @@ function displayPieChart(canvasId, chartData) {
 /*-------------sales total per unit------------------*/
 
 
+async function getData() {
+    const response = await fetch(file);
+    const body = await response.json();
+    return body;
+}
 
 document.addEventListener("DOMContentLoaded", async (event) => {
     const data = await getData();
@@ -246,15 +251,15 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     const filteredDataFebMar = filterDataByMonth(data, [2, 3]);
     const totalSalesFebMar = calculateTotalSales(filteredDataFebMar);
 
-    const filteredDataMayJun = filterDataByMonth(data, [5, 6]);
-    const totalSalesMayJun = calculateTotalSales(filteredDataMayJun);
+    const filteredDataMarApr = filterDataByMonth(data, [3, 4]);
+    const totalSalesMarApr = calculateTotalSales(filteredDataMarApr);
 
     const filteredDataJulAug = filterDataByMonth(data, [7, 8]);
     const totalSalesJulAug = calculateTotalSales(filteredDataJulAug);
 
     displayTotalSalesByUnit('ChartTrendPerUnit', [
         { label: 'Feb-Mar', commercial: totalSalesFebMar.commercial, residential: totalSalesFebMar.residential },
-        { label: 'May-Jun', commercial: totalSalesMayJun.commercial, residential: totalSalesMayJun.residential },
+        { label: 'Mar-Apr', commercial: totalSalesMarApr.commercial, residential: totalSalesMarApr.residential },
         { label: 'Jul-Aug', commercial: totalSalesJulAug.commercial, residential: totalSalesJulAug.residential }
     ]);
 });
@@ -312,67 +317,48 @@ function displayTotalSalesByUnit(canvasId, dataSets) {
 }
 
 
+
 /*-------------sales total per building------------------*/
+
+async function getData() {
+    const response = await fetch(file);
+    const body = await response.json();
+    return body;
+}
 
 document.addEventListener("DOMContentLoaded", async (event) => {
     const data = await getData();
 
-    const filteredDataFebMar = data.filter(({ BOROUGH_NAME, SALE_DATE }) => {
-        const saleDate = new Date(SALE_DATE);
-        return BOROUGH_NAME === 'Staten Island' && (saleDate.getMonth() === 1 || saleDate.getMonth() === 2);
-    });
+    const filterDataByMonth = (data, months) => {
+        return data.filter(({ BOROUGH_NAME, MON_YYYY }) => {
+            const [month, year] = MON_YYYY.split('-');
+            const monthIndex = new Date(`${month} 1, ${year}`).getMonth() + 1;
+            return BOROUGH_NAME === 'Staten Island' && months.includes(monthIndex);
+        });
+    };
 
-    const listBuildingClassFebMar = Object.groupBy(filteredDataFebMar, ({ BUILDING_CLASS_CATEGORY }) => BUILDING_CLASS_CATEGORY);
-    const arrayBuildingClassFebMar = Object.keys(listBuildingClassFebMar).map(buildingClass => {
-        const value = listBuildingClassFebMar[buildingClass].map(totalsales => {
-            return totalsales.TOTAL_SALES;
-        }).reduce((result, item) => result + item, 0);
-        return {
-            buildingClass,
-            value
-        };
-    });
+    const groupByBuildingClass = (data) => {
+        return Object.entries(data.reduce((result, item) => {
+            const { BUILDING_CLASS_CATEGORY, TOTAL_SALES } = item;
+            if (!result[BUILDING_CLASS_CATEGORY]) {
+                result[BUILDING_CLASS_CATEGORY] = 0;
+            }
+            result[BUILDING_CLASS_CATEGORY] += TOTAL_SALES;
+            return result;
+        }, {})).map(([buildingClass, value]) => ({ buildingClass, value }));
+    };
 
-    const topBuildingClassesFebMar = arrayBuildingClassFebMar.sort((a, b) => b.value - a.value).slice(0, 5);
+    const filteredDataFebMar = filterDataByMonth(data, [2, 3]);
+    const topBuildingClassesFebMar = groupByBuildingClass(filteredDataFebMar).sort((a, b) => b.value - a.value).slice(0, 5);
 
-    const filteredDataMayJun = data.filter(({ BOROUGH_NAME, SALE_DATE }) => {
-        const saleDate = new Date(SALE_DATE);
-        return BOROUGH_NAME === 'Staten Island' && (saleDate.getMonth() === 4 || saleDate.getMonth() === 5);
-    });
+    const filteredDataMarApr = filterDataByMonth(data, [3, 4]);
+    const topBuildingClassesMarApr = groupByBuildingClass(filteredDataMarApr).sort((a, b) => b.value - a.value).slice(0, 5);
 
-    const listBuildingClassMayJun = Object.groupBy(filteredDataMayJun, ({ BUILDING_CLASS_CATEGORY }) => BUILDING_CLASS_CATEGORY);
-    const arrayBuildingClassMayJun = Object.keys(listBuildingClassMayJun).map(buildingClass => {
-        const value = listBuildingClassMayJun[buildingClass].map(totalsales => {
-            return totalsales.TOTAL_SALES;
-        }).reduce((result, item) => result + item, 0);
-        return {
-            buildingClass,
-            value
-        };
-    });
-
-    const topBuildingClassesMayJun = arrayBuildingClassMayJun.sort((a, b) => b.value - a.value).slice(0, 5);
-
-    const filteredDataJulAug = data.filter(({ BOROUGH_NAME, SALE_DATE }) => {
-        const saleDate = new Date(SALE_DATE);
-        return BOROUGH_NAME === 'Staten Island' && (saleDate.getMonth() === 6 || saleDate.getMonth() === 7);
-    });
-
-    const listBuildingClassJulAug = Object.groupBy(filteredDataJulAug, ({ BUILDING_CLASS_CATEGORY }) => BUILDING_CLASS_CATEGORY);
-    const arrayBuildingClassJulAug = Object.keys(listBuildingClassJulAug).map(buildingClass => {
-        const value = listBuildingClassJulAug[buildingClass].map(totalsales => {
-            return totalsales.TOTAL_SALES;
-        }).reduce((result, item) => result + item, 0);
-        return {
-            buildingClass,
-            value
-        };
-    });
-
-    const topBuildingClassesJulAug = arrayBuildingClassJulAug.sort((a, b) => b.value - a.value).slice(0, 5);
+    const filteredDataJulAug = filterDataByMonth(data, [7, 8]);
+    const topBuildingClassesJulAug = groupByBuildingClass(filteredDataJulAug).sort((a, b) => b.value - a.value).slice(0, 5);
 
     displayTrenBuilding('chartTrenBuilding1', topBuildingClassesFebMar, 'Feb-Mar');
-    displayTrenBuilding('chartTrenBuilding2', topBuildingClassesMayJun, 'May-Jun');
+    displayTrenBuilding('chartTrenBuilding2', topBuildingClassesMarApr, 'Mar-Apr');
     displayTrenBuilding('chartTrenBuilding3', topBuildingClassesJulAug, 'Jul-Aug');
 });
 
@@ -391,8 +377,6 @@ function displayTrenBuilding(chartId, chartData, label) {
                 borderWidth: 1
             }]
         },
-
-
         options: {
             responsive: true,
             plugins: {
@@ -416,7 +400,6 @@ function displayTrenBuilding(chartId, chartData, label) {
                         text: 'Total Sales'
                     }
                 },
-
             }
         }
     });
@@ -438,7 +421,8 @@ if (!Object.groupBy) {
 
 
 
-/*---------------*/
+/*--------------------TABLE DATA----------------*/
+
 
 const itemsPerPage = 10; 
 let currentPage = 1; 
@@ -459,20 +443,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     const pagination = document.getElementById('pagination');
     const tableSearchInput = document.getElementById('table-search-input');
     const sortSaleDateHeader = document.getElementById('sort-sale-date');
-    const sortBuildingClassHeader = document.getElementById('sort-building-class');
+    const sortBuildingClassHeader = document.getElementById('sort-category');
     const sortResidentialUnitsHeader = document.getElementById('sort-residential-units');
     const sortCommercialUnitsHeader = document.getElementById('sort-commercial-units');
     const sortTotalSalesHeader = document.getElementById('sort-total-sales');
 
+    function parseDate(dateString) {
+        const [day, month, year] = dateString.split('-').map(Number);
+        return new Date(`20${year}`, month - 1, day);
+    }
 
     function handleSearchData(event) {
         const value = event.target.value.trim().toLowerCase();
-        sortedData = data.filter(item => item["SALE_DATE"].toLowerCase().includes(value));
+        sortedData = data.filter(item => {
+            return (
+                item["SALE_DATE"].toLowerCase().includes(value) ||
+                item["BUILDING_CLASS_CATEGORY"].toLowerCase().includes(value) ||
+                item["RESIDENTIAL_UNITS"].toString().toLowerCase().includes(value) ||
+                item["COMMERCIAL_UNITS"].toString().toLowerCase().includes(value) ||
+                item["TOTAL_SALES"].toString().toLowerCase().includes(value)
+            );
+        });
         currentPage = 1; 
         displayItems();
         displayPagination();
     }
-
 
     function displayItems() {
         const start = (currentPage - 1) * itemsPerPage;
@@ -480,9 +475,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         const paginatedItems = sortedData.slice(start, end);
 
         tableBody.innerHTML = '';
-        paginatedItems.forEach(item => {
+        paginatedItems.forEach((item, index) => {
             const row = document.createElement('tr');
             row.innerHTML = `
+                <td>${start + index + 1}</td>
                 <td>${item["SALE_DATE"]}</td>
                 <td>${item["BUILDING_CLASS_CATEGORY"]}</td>
                 <td>${item["RESIDENTIAL_UNITS"]}</td>
@@ -493,7 +489,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-
     function sortByColumn(column) {
         if (currentSortColumn === column) {
             sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
@@ -503,20 +498,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         sortedData.sort((a, b) => {
-            const valueA = a[column];
-            const valueB = b[column];
+            let valueA = a[column];
+            let valueB = b[column];
+            if (column === 'SALE_DATE') {
+                valueA = parseDate(valueA);
+                valueB = parseDate(valueB);
+            }
             if (typeof valueA === 'number' && typeof valueB === 'number') {
-                if (sortDirection === 'asc') {
-                    return valueA - valueB;
-                } else {
-                    return valueB - valueA;
-                }
+                return sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
             } else {
-                if (sortDirection === 'asc') {
-                    return valueA.toString().localeCompare(valueB.toString());
-                } else {
-                    return valueB.toString().localeCompare(valueA.toString());
-                }
+                return sortDirection === 'asc'
+                    ? valueA.toString().localeCompare(valueB.toString())
+                    : valueB.toString().localeCompare(valueA.toString());
             }
         });
 
@@ -526,11 +519,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         updateSortIcon(column);
     }
 
-   
     function updateSortIcon(column) {
         const sortIcons = {
             'SALE_DATE': document.getElementById('sort-icon-sale-date'),
-            'BUILDING_CLASS_CATEGORY': document.getElementById('sort-icon-building-class'),
+            'BUILDING_CLASS_CATEGORY': document.getElementById('sort-icon-category'),
             'RESIDENTIAL_UNITS': document.getElementById('sort-icon-residential-units'),
             'COMMERCIAL_UNITS': document.getElementById('sort-icon-commercial-units'),
             'TOTAL_SALES': document.getElementById('sort-icon-total-sales')
@@ -545,7 +537,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-      
     function displayPagination() {
         const totalPages = Math.ceil(sortedData.length / itemsPerPage);
         pagination.innerHTML = '';
@@ -582,7 +573,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     displayItems();
     displayPagination();
 
-  
     sortSaleDateHeader.addEventListener('click', () => {
         sortByColumn('SALE_DATE');
     });
@@ -605,3 +595,5 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     tableSearchInput.addEventListener('input', handleSearchData);
 });
+
+
