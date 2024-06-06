@@ -477,17 +477,11 @@ td {
   outline: 1px solid rgba(0, 0, 0, 0.2);
 }
 
+.article h2 {
+  text-align: center;
+}
+
 /*-------------------------------------*/
-@media (min-width:800px) {
-  
-}
-@media (max-width: 768px) {
-  .charts, .char {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-}
 
 
 .services {
