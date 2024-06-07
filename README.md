@@ -1,10 +1,9 @@
 # Team Member
 Team Leader: Raihan Fadhilah
-Front End Engineer:
-Habsi Bintang
-Pepep Febriansyah
-Ulfitasari
-Yusuf Habibulloh
+Front End Engineer: ...Habsi Bintang
+...Pepep Febriansyah
+...Ulfitasari
+...Yusuf Habibulloh
 Deployment Team: Vanka Alba
 Pitch Deck Team:
 Ida Masluha
