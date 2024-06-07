@@ -12,7 +12,9 @@
   <script src="js/script.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
@@ -22,37 +24,21 @@
 
     <div class="navbar-nav">
       <div class="dropdown">
-     <a href="#Date" class="dropbtn">Date &#9662;</a>
-        <div class="dropdown-content">
-          <label><input type="checkbox" value="September 2016"> September 2016</label>
-          <label><input type="checkbox" value="October 2016"> October 2016</label>
-          <label><input type="checkbox" value="November 2016"> November 2016</label>
-          <label><input type="checkbox" value="December 2016"> December 2016</label>
-          <label><input type="checkbox" value="January 2017"> January 2017</label>
-          <label><input type="checkbox" value="February 2017"> February 2017</label>
-          <label><input type="checkbox" value="March 2017"> March 2017</label>
-          <label><input type="checkbox" value="April 2017"> April 2017</label>
-          <label><input type="checkbox" value="May 2017"> May 2017</label>
-          <label><input type="checkbox" value="June 2017"> June 2017</label>
-          <label><input type="checkbox" value="July 2017"> July 2017</label>
-          <label><input type="checkbox" value="August 2017"> August 2017</label>
+        <a href="#Date" class="dropbtn">Date &#9662;</a>
+        <div id="Date" class="dropdown-content">
         </div>
       </div>
-    
       <div class="dropdown">
-        <a href="#Building" class="dropbtn">Building Class Category &#9662;</a>
-        <div class="dropdown-content">
-          <label><input type="checkbox" value="01"> 01</label>
-          <label><input type="checkbox" value="02"> 02</label>
-          <label><input type="checkbox" value="03"> 03</label>
-        
-      </div>
-      </div>
-    
+        <a href="#BuildingClass" class="dropbtn">Building Class &#9662;</a>
+        <div id="buildingClassDropdown" class="dropdown-content">
+            <!-- Building class checkboxes will be added here dynamically -->
+        </div>
+    </div>
+
       <button class="button" width="20px">Add Filter</button>
     </div>
-  </div>
-        <!--<p href="#Date" class="dropbtn">Date &#9662;</p>
+    </div>
+    <!--<p href="#Date" class="dropbtn">Date &#9662;</p>
         <div class="dropdown-content">
           <a href="#Sept2016">September 2016</a>
           <a href="#Oct2016">Oktober 2016</a>
@@ -84,7 +70,7 @@
         </div>
       </div>
     </div>!-->
-    
+
   </nav>
   <!-- navbar end -->
 
@@ -142,9 +128,9 @@
       </div>
     </div>
 
-      <h1>SALES TOTAL PER BUILDING CLASS CATEGORY</h1>
-      <div class="char">
-        <div class="chartt">
+    <h1>SALES TOTAL PER BUILDING CLASS CATEGORY</h1>
+    <div class="char">
+      <div class="chartt">
         <canvas class="chart-size" id="chartTrenBuilding1" height="250px"></canvas>
       </div>
       <div class="chartt">
@@ -154,26 +140,28 @@
         <canvas class="chart-size" id="chartTrenBuilding3" height="250px"></canvas>
       </div>
     </div>
-</div>
+  </div>
 
-<article id="product-table">
-  <input type="text" id="table-search-input" placeholder="Search">
-  <table>
-    <h2>Table Data</h2>
-    <thead>
-      <tr>
-        <th id="sort-No">No <span id="sort-icon-No"></span></th>
-        <th id="sort-sale-date">Sale Date <span id="sort-icon-sale-date"></span></th>
-        <th id="sort-category">Building Class Category <span id="sort-icon-category"></span></th>
-        <th id="sort-residential-units">Residential Unit <span id="sort-icon-residential-units"></span></th>
-        <th id="sort-commercial-units">Commercial Unit <span id="sort-icon-commercial-units"></span></th>
-        <th id="sort-total-sales">Total Sales <span id="sort-icon-total-sales"></span></th>
-      </tr>
-    </thead>
-    <tbody id="table-body"></tbody>
-  </table>
-  <div id="pagination" class="pagination"></div>
-</article>
+  <article id="product-table">
+    <input type="text" id="table-search-input" placeholder="Search Product Detail">
+    <table>
+      <h2>Table Data</h2>
+      <thead>
+        <tr>
+          <th id="sort-No">No <span id="sort-icon-No">&#x25B2;&#x25BC;</span></th>
+          <th id="sort-category">Building Class Category <span id="sort-icon-category">&#x25B2;&#x25BC;</span></th>
+          <th id="sort-residential-units">Residential Units <span
+              id="sort-icon-residential-units">&#x25B2;&#x25BC;</span></th>
+          <th id="sort-commercial-units">Commercial Units <span id="sort-icon-commercial-units">&#x25B2;&#x25BC;</span>
+          </th>
+          <th id="sort-total-sales">Total Sales <span id="sort-icon-total-sales">&#x25B2;&#x25BC;</span></th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+    <div id="pagination" class="pagination"></div>
+  </article>
+
 
 
 
