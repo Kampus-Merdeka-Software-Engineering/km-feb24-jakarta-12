@@ -12,6 +12,7 @@
 # Features
 
 # Links
-- [Deployment Link (Vercel)](https://km-feb24-jakarta-12.vercel.app)
-- [QA Documentation Link (Spreadsheet)](https://docs.google.com/spreadsheets/d/1H45aXc90r4cpcZPAqPG-2_iZU0l1S3568SIj389xKmQ/edit?usp=sharing)
-- [Deck Documentation Link (Canva)](https://www.canva.com/design/DAGGHJ7JeB8/xMZKEasFd7a9tCQzEUJWFg/edit?utm_content=DAGGHJ7JeB8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+- [Dataset (Kaggle)](https://www.kaggle.com/datasets/new-york-city/nyc-property-sales/data)
+- [Deployment (Vercel)](https://km-feb24-jakarta-12.vercel.app)
+- [QA Documentation (Spreadsheet)](https://docs.google.com/spreadsheets/d/1H45aXc90r4cpcZPAqPG-2_iZU0l1S3568SIj389xKmQ/edit?usp=sharing)
+- [Deck Documentation (Canva)](https://www.canva.com/design/DAGGHJ7JeB8/xMZKEasFd7a9tCQzEUJWFg/edit?utm_content=DAGGHJ7JeB8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
