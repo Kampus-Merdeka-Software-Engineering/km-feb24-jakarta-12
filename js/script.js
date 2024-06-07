@@ -48,7 +48,7 @@ function processTotalSalesByBorough(data) {
             data: arrayBorough.map(item => item.y),
             label: 'Sales Total',
             backgroundColor: [
-                'rgba(70, 130, 180, 1)',  
+                '#0e0e70',  
             ],
             borderColor: [
                 'rgba(0, 0, 139, 1)',      
@@ -104,8 +104,8 @@ function processSalesTrendDataForStatenIsland(data) {
         datasets: [{
             label: 'Total Sales',
             data: dataValues,
-            borderColor: 'rgba(75, 192, 192, 1)',
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: '#0e0e70',
+            backgroundColor: '#0e0e70',
             fill: false,
             borderWidth: 1
         }]
@@ -278,14 +278,14 @@ function displayTotalSalesByUnit(canvasId, dataSets) {
                 label: 'Commercial Sales',
                 data: commercialData,
                 backgroundColor: '#0e0e70',
-                borderColor: 'rgba(255, 99, 132, 1)',
+                borderColor: '#0e0e70',
                 borderWidth: 1
             },
             {
                 label: 'Residential Sales',
                 data: residentialData,
                 backgroundColor: '#a5a7f8',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                borderColor: '#a5a7f8',
                 borderWidth: 1
             }
         ]
@@ -372,8 +372,8 @@ function displayTrenBuilding(chartId, chartData, label) {
             datasets: [{
                 data: chartData.map(data => data.value),
                 label: 'Sale Price',
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: '#a5a7f8',
+                borderColor: '#a5a7f8',
                 borderWidth: 1
             }]
         },
@@ -423,18 +423,12 @@ if (!Object.groupBy) {
 
 /*--------------------TABLE DATA----------------*/
 
-
 const itemsPerPage = 10; 
 let currentPage = 1; 
 const maxButtons = 4;
 let sortDirection = '';
 let currentSortColumn = '';
 
-async function getData() {
-    const response = await fetch(file);
-    const body = await response.json();
-    return body;
-}
 
 document.addEventListener("DOMContentLoaded", async () => {
     const data = await getData();
@@ -442,22 +436,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tableBody = document.getElementById('table-body');
     const pagination = document.getElementById('pagination');
     const tableSearchInput = document.getElementById('table-search-input');
-    const sortSaleDateHeader = document.getElementById('sort-sale-date');
+    const sortNoHeader = document.getElementById('sort-No');
     const sortBuildingClassHeader = document.getElementById('sort-category');
     const sortResidentialUnitsHeader = document.getElementById('sort-residential-units');
     const sortCommercialUnitsHeader = document.getElementById('sort-commercial-units');
     const sortTotalSalesHeader = document.getElementById('sort-total-sales');
 
-    function parseDate(dateString) {
-        const [day, month, year] = dateString.split('-').map(Number);
-        return new Date(`20${year}`, month - 1, day);
-    }
-
     function handleSearchData(event) {
         const value = event.target.value.trim().toLowerCase();
         sortedData = data.filter(item => {
             return (
-                item["SALE_DATE"].toLowerCase().includes(value) ||
                 item["BUILDING_CLASS_CATEGORY"].toLowerCase().includes(value) ||
                 item["RESIDENTIAL_UNITS"].toString().toLowerCase().includes(value) ||
                 item["COMMERCIAL_UNITS"].toString().toLowerCase().includes(value) ||
@@ -479,7 +467,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${start + index + 1}</td>
-                <td>${item["SALE_DATE"]}</td>
                 <td>${item["BUILDING_CLASS_CATEGORY"]}</td>
                 <td>${item["RESIDENTIAL_UNITS"]}</td>
                 <td>${item["COMMERCIAL_UNITS"]}</td>
@@ -500,10 +487,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         sortedData.sort((a, b) => {
             let valueA = a[column];
             let valueB = b[column];
-            if (column === 'SALE_DATE') {
-                valueA = parseDate(valueA);
-                valueB = parseDate(valueB);
-            }
             if (typeof valueA === 'number' && typeof valueB === 'number') {
                 return sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
             } else {
@@ -521,7 +504,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function updateSortIcon(column) {
         const sortIcons = {
-            'SALE_DATE': document.getElementById('sort-icon-sale-date'),
+            'No': document.getElementById('sort-icon-No'),
             'BUILDING_CLASS_CATEGORY': document.getElementById('sort-icon-category'),
             'RESIDENTIAL_UNITS': document.getElementById('sort-icon-residential-units'),
             'COMMERCIAL_UNITS': document.getElementById('sort-icon-commercial-units'),
@@ -529,11 +512,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
         
         Object.keys(sortIcons).forEach(key => {
-            sortIcons[key].innerHTML = '';
+            sortIcons[key].classList.remove('sort-icon-asc', 'sort-icon-desc');
+            sortIcons[key].innerHTML = '&#x25B2;&#x25BC;';
         });
         
         if (sortIcons[column]) {
-            sortIcons[column].innerHTML = sortDirection === 'asc' ? ' &#x25B2;' : ' &#x25BC;';
+            sortIcons[column].innerHTML = sortDirection === 'asc' ? '&#x25B2;' : '&#x25BC;';
+            sortIcons[column].classList.add(sortDirection === 'asc' ? 'sort-icon-asc' : 'sort-icon-desc');
         }
     }
 
@@ -573,8 +558,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     displayItems();
     displayPagination();
 
-    sortSaleDateHeader.addEventListener('click', () => {
-        sortByColumn('SALE_DATE');
+    sortNoHeader.addEventListener('click', () => {
+        sortByColumn('No');
     });
 
     sortBuildingClassHeader.addEventListener('click', () => {
@@ -595,5 +580,3 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     tableSearchInput.addEventListener('input', handleSearchData);
 });
-
-
