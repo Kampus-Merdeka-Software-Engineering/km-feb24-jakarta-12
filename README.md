@@ -1,17 +1,9 @@
 # Team Member
-Team Leader: Raihan Fadhilah
-Front End Engineer: ...Habsi Bintang
-...Pepep Febriansyah
-...Ulfitasari
-...Yusuf Habibulloh
-Deployment Team: Vanka Alba
-Pitch Deck Team:
-Ida Masluha
-Ravitilova
-Shalsa Salisa Az Zahra
-Quality Assurance:
-Fidela Citra Imanda
-Muhdad Alfaris Bahmid
+- Team Leader: Raihan Fadhilah
+- Front End Engineer: Habsi Bintang, Pepep Febriansyah, Ulfitasari, & Yusuf Habibulloh
+- Deployment Team: Vanka Alba
+- Pitch Deck Team: Ida Masluha, Ravitilova, & Shalsa Salisa Az Zahra
+- Quality Assurance: Fidela Citra Imanda & Muhdad Alfaris Bahmid
 
 # About Project
 
