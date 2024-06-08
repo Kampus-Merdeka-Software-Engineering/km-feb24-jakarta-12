@@ -9,7 +9,7 @@
   <!-- Style CSS -->
   <link rel="stylesheet" href="css/style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="js/script.js"></script>
+  <script src="css/script.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link
@@ -20,7 +20,11 @@
 <body>
   <!-- navbar start -->
   <nav class="navbar">
-    <a href="#" class="navbar-logo">NYC <span>Property Sales</span></a>
+    <div class="navbar-left">
+        <img src="images/logo.png" alt="team 12 Section Jakarta" class="navbar-logo-img" />
+        <a href="#" class="navbar-logo">NYC <span>Property Sales</span></a>
+    </div>
+
 
     <div class="navbar-nav">
       <div class="dropdown">
@@ -38,38 +42,7 @@
       <button class="button" width="20px">Add Filter</button>
     </div>
     </div>
-    <!--<p href="#Date" class="dropbtn">Date &#9662;</p>
-        <div class="dropdown-content">
-          <a href="#Sept2016">September 2016</a>
-          <a href="#Oct2016">Oktober 2016</a>
-          <a href="#Nov2016">November 2016</a>
-          <a href="#Dec2016">Desember 2016</a>
-          <a href="#Jan2017">Januari 2017</a>
-          <a href="#Feb2017">Februari 2017</a>
-          <a href="#Mar2017">Maret 2017</a>
-          <a href="#Apr2017">April 2017</a>
-          <a href="#May2017">Mei 2017</a>
-          <a href="#Jun2017">Juni 2017</a>
-          <a href="#Jul2017">Juli 2017</a>
-          <a href="#Aug2017">Agustus 2017</a>
-        </div>
-      </div> 
-      <div class="dropdown">
-        <a href="#BuildingClassCategory" class="dropbtn">Building Class Category &#9662;</a>
-        <div class="dropdown-content">
-          <a href="#A">A</a>
-          <a href="#B">B</a>
-          <a href="#C">C</a>
-          <a href="#D">D</a>
-          <a href="#E">E</a>
-          <a href="#F">F</a>
-          <a href="#G">G</a>
-          <a href="#H">H</a>
-          <a href="#I">I</a>
-          <a href="#J">J</a>
-        </div>
-      </div>
-    </div>!-->
+    
 
   </nav>
   <!-- navbar end -->
@@ -80,8 +53,8 @@
     <main class="content">
       <h1>About</h1>
       <p>
-        "Building or building unit (apartment, etc.) sold in the New York City property market over a
-        12-month period."
+        "Explore property sales trends in Staten Island and discover key information such as average 
+        prices and other important statistics to help you make better property investment decisions in this borough."
       </p>
     </main>
   </section>
@@ -109,18 +82,58 @@
   <div class="chart-container">
     <div class="chart">
       <h2>SALES TOTAL PER BOROUGH</h2>
+      <div class="filter">
+        <div class="dropdown">
+          <button class="dropbtn">Filter</button>
+          <div class="dropdown-content">
+            <div>
+              <label for="date-filter-totalborough">Date:</label>
+              <select id="date-filter-totalborough" multiple>
+                <!-- Options will be populated dynamically -->
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
       <canvas id="chartTotalSalesByBorough" height="80px"></canvas>
     </div>
     <div class="charts">
-      <div class="chartt">
-        <h2>SALES TREND PER MONTH</h2>
-        <canvas id="lineChartSalesTrend" height="150px"></canvas>
-      </div>
-      <div class="chartt">
-        <h2>TOP 5 BUILDING CLASS</h2>
-        <canvas id="PieChartTop5" height="150px"></canvas>
+  <div class="chartt">
+    <h2>SALES TREND PER MONTH</h2>
+    <div class="filter">
+      <div class="dropdown">
+        <button class="dropbtn">Filter</button>
+        <div class="dropdown-content">
+          <div>
+            <label for="month-filter">Date:</label>
+            <select id="month-filter" multiple>
+              <!-- Options will be populated dynamically -->
+            </select>
+          </div>
+        </div>
       </div>
     </div>
+    <canvas id="lineChartSalesTrend" height="150px"></canvas>
+  </div>
+  <div class="chartt">
+    <h2>TOP 5 BUILDING CLASS</h2>
+    <div class="filter">
+      <div class="dropdown">
+        <button class="dropbtn">Filter</button>
+        <div class="dropdown-content">
+          <div>
+            <label for="date-filter-top5">Date:</label>
+            <select id="date-filter-top5" multiple>
+              <!-- Options will be populated dynamically -->
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <canvas id="PieChartTop5" height="150px"></canvas>
+  </div>
+</div>
+
     <div class="chartt">
       <h2>SALES TOTAL PER UNIT TYPE</h2>
       <div class="chart-container">
@@ -142,13 +155,16 @@
     </div>
   </div>
 
-  <article id="product-table">
-    <input type="text" id="table-search-input" placeholder="Search Product Detail">
+  
     <table>
+      <div>
       <h2>Table Data</h2>
-      <thead>
+      <article id="product-table">
+        <input type="text" id="table-search-input" placeholder="Search Product Detail">
+      </div>
+        <thead>
         <tr>
-          <th id="sort-No">No <span id="sort-icon-No">&#x25B2;&#x25BC;</span></th>
+          <th id="sort-No">No </th>
           <th id="sort-category">Building Class Category <span id="sort-icon-category">&#x25B2;&#x25BC;</span></th>
           <th id="sort-residential-units">Residential Units <span
               id="sort-icon-residential-units">&#x25B2;&#x25BC;</span></th>
