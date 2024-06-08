@@ -128,7 +128,17 @@ function displayBarChart(canvasId, chartData) {
             indexAxis: 'y',
             scales: {
                 x: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Total Sales' 
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Borough' 
+                    }
                 }
             }
         }
@@ -141,10 +151,25 @@ function displayLineChart(canvasId, chartData) {
         type: 'line',
         data: chartData,
         options: {
-            responsive: true
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Month-Year' 
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Total Sales' 
+                    }
+                }
+            }
         }
     });
 }
+
 
 function displayComparisonBarChart(canvasId, chartData) {
     const ctx = document.getElementById(canvasId);
@@ -423,36 +448,51 @@ if (!Object.groupBy) {
 
 /*--------------------TABLE DATA----------------*/
 
-const itemsPerPage = 10; 
-let currentPage = 1; 
+const itemsPerPage = 10;
+let currentPage = 1;
 const maxButtons = 4;
 let sortDirection = '';
 let currentSortColumn = '';
 
-
 document.addEventListener("DOMContentLoaded", async () => {
     const data = await getData();
-    let sortedData = data.slice();
+    let groupedData = groupByBuildingClass(data);
+    let sortedData = groupedData.slice();
     const tableBody = document.getElementById('table-body');
     const pagination = document.getElementById('pagination');
     const tableSearchInput = document.getElementById('table-search-input');
-    const sortNoHeader = document.getElementById('sort-No');
     const sortBuildingClassHeader = document.getElementById('sort-category');
     const sortResidentialUnitsHeader = document.getElementById('sort-residential-units');
     const sortCommercialUnitsHeader = document.getElementById('sort-commercial-units');
     const sortTotalSalesHeader = document.getElementById('sort-total-sales');
 
+    function groupByBuildingClass(data) {
+        const groups = {};
+        data.forEach(item => {
+            const buildingClass = item["BUILDING_CLASS_CATEGORY"];
+            if (!groups[buildingClass]) {
+                groups[buildingClass] = {
+                    "BUILDING_CLASS_CATEGORY": buildingClass,
+                    "RESIDENTIAL_UNITS": 0,
+                    "COMMERCIAL_UNITS": 0,
+                    "TOTAL_SALES": 0
+                };
+            }
+            groups[buildingClass]["RESIDENTIAL_UNITS"] += parseInt(item["RESIDENTIAL_UNITS"]);
+            groups[buildingClass]["COMMERCIAL_UNITS"] += parseInt(item["COMMERCIAL_UNITS"]);
+            groups[buildingClass]["TOTAL_SALES"] += parseFloat(item["TOTAL_SALES"]);
+        });
+        return Object.values(groups);
+    }
+
     function handleSearchData(event) {
         const value = event.target.value.trim().toLowerCase();
-        sortedData = data.filter(item => {
+        sortedData = groupedData.filter(item => {
             return (
-                item["BUILDING_CLASS_CATEGORY"].toLowerCase().includes(value) ||
-                item["RESIDENTIAL_UNITS"].toString().toLowerCase().includes(value) ||
-                item["COMMERCIAL_UNITS"].toString().toLowerCase().includes(value) ||
-                item["TOTAL_SALES"].toString().toLowerCase().includes(value)
+                item["BUILDING_CLASS_CATEGORY"].toLowerCase().includes(value)
             );
         });
-        currentPage = 1; 
+        currentPage = 1;
         displayItems();
         displayPagination();
     }
@@ -496,7 +536,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         });
 
-        currentPage = 1; 
+        currentPage = 1;
         displayItems();
         displayPagination();
         updateSortIcon(column);
@@ -504,18 +544,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function updateSortIcon(column) {
         const sortIcons = {
-            'No': document.getElementById('sort-icon-No'),
             'BUILDING_CLASS_CATEGORY': document.getElementById('sort-icon-category'),
             'RESIDENTIAL_UNITS': document.getElementById('sort-icon-residential-units'),
             'COMMERCIAL_UNITS': document.getElementById('sort-icon-commercial-units'),
             'TOTAL_SALES': document.getElementById('sort-icon-total-sales')
         };
-        
+
         Object.keys(sortIcons).forEach(key => {
             sortIcons[key].classList.remove('sort-icon-asc', 'sort-icon-desc');
             sortIcons[key].innerHTML = '&#x25B2;&#x25BC;';
         });
-        
+
         if (sortIcons[column]) {
             sortIcons[column].innerHTML = sortDirection === 'asc' ? '&#x25B2;' : '&#x25BC;';
             sortIcons[column].classList.add(sortDirection === 'asc' ? 'sort-icon-asc' : 'sort-icon-desc');
@@ -558,10 +597,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     displayItems();
     displayPagination();
 
-    sortNoHeader.addEventListener('click', () => {
-        sortByColumn('No');
-    });
-
     sortBuildingClassHeader.addEventListener('click', () => {
         sortByColumn('BUILDING_CLASS_CATEGORY');
     });
@@ -580,3 +615,4 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     tableSearchInput.addEventListener('input', handleSearchData);
 });
+
