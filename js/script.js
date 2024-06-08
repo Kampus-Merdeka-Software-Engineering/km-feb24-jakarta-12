@@ -235,7 +235,7 @@ function displayPieChart(canvasId, chartData) {
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'bottom',
+                    position: 'right',
 
                 },
             },
@@ -456,7 +456,8 @@ let currentSortColumn = '';
 
 document.addEventListener("DOMContentLoaded", async () => {
     const data = await getData();
-    let groupedData = groupByBuildingClass(data);
+    const statenIslandData = filterDataByBorough(data, 'Staten Island');
+    let groupedData = groupByBuildingClass(statenIslandData);
     let sortedData = groupedData.slice();
     const tableBody = document.getElementById('table-body');
     const pagination = document.getElementById('pagination');
@@ -465,6 +466,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const sortResidentialUnitsHeader = document.getElementById('sort-residential-units');
     const sortCommercialUnitsHeader = document.getElementById('sort-commercial-units');
     const sortTotalSalesHeader = document.getElementById('sort-total-sales');
+
+    function filterDataByBorough(data, boroughName) {
+        return data.filter(item => item["BOROUGH_NAME"] === boroughName);
+    }
 
     function groupByBuildingClass(data) {
         const groups = {};
@@ -615,4 +620,3 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     tableSearchInput.addEventListener('input', handleSearchData);
 });
-
