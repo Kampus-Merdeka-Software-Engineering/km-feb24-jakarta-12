@@ -27,7 +27,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.4rem 7%;
+  padding: 10px;
   background-color: var(--bg-light);
   border-bottom: 1px solid var(--primary);
   position: fixed;
@@ -38,14 +38,34 @@ body {
 }
 
 
-.navbar .navbar-logo {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #ffffff;
-  font-style: italic;
+.navbar-left {
+  display: flex;
+  align-items: center;
 }
 
-.navbar .navbar-logo span {
+.navbar-logo-img {
+  margin-right: 10px; /* Jarak antara logo dan judul */
+  width: 70px; /* Sesuaikan ukuran logo */
+  height: auto;
+  margin-left: 20px;
+}
+
+.navbar-logo {
+  font-size: 24px; /* Sesuaikan ukuran teks */
+  font-weight: bold;
+  color: #333; /* Sesuaikan warna teks */
+  text-decoration: none; /* Hilangkan garis bawah pada tautan */
+}
+
+.navbar-left a {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  font-style: italic;
+  padding: 1rem 0.5rem;
+}
+
+.navbar .navbar-left span {
   color: var(--primary);
 }
 
@@ -430,6 +450,13 @@ table {
   border-radius: 10px;
 }
 
+h2 {
+  font-size: 40px;
+  color: white;
+  margin-left: 30px;
+  text-decoration: underline;
+}
+
 th,
 td {
   border: 1px solid #dddddd;
@@ -450,6 +477,10 @@ td {
 .pagination {
   margin-top: 10px;
   text-align: center;
+}
+
+tr {
+  cursor: pointer;
 }
 
 .pagination button {
