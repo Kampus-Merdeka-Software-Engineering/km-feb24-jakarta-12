@@ -25,21 +25,22 @@
         <a href="#" class="navbar-logo">NYC <span>Property Sales</span></a>
     </div>
 
-
     <div class="navbar-nav">
+      <a href="#About">About</a>
       <div class="dropdown">
-        <a href="#Date" class="dropbtn">Date &#9662;</a>
-        <div id="Date" class="dropdown-content">
+        <a href="#Data" class="dropbtn">Data &#9662;</a>
+        <div id="DataContent" class="dropdown-content">
+          <a href="#SalesTotalperBorough">Sales Total per Borough</a>
+          <a href="#SalesTrendperMonth">Sales Trend per Month</a>
+          <a href="#Top5BuildingClassCategory">Top 5 Building Class Category</a>
+          <a href="#SalesTotalperUnitType">Sales Total per Unit Type</a>
+          <a href="#SalesTotalperBuildingClassCategory">Sales Total per Building Class Category</a>
         </div>
       </div>
-      <div class="dropdown">
-        <a href="#BuildingClass" class="dropbtn">Building Class &#9662;</a>
-        <div id="buildingClassDropdown" class="dropdown-content">
-            <!-- Building class checkboxes will be added here dynamically -->
-        </div>
-    </div>
-
-      <button class="button" width="20px">Add Filter</button>
+      <a href="#DataTable" class="dropbtn">DataTable</a>
+      <a href="#Teams">Teams</a>
+      </div>
+      <!-- <button class="button" width="20px">Add Filter</button> -->
     </div>
     </div>
     
@@ -50,7 +51,7 @@
 
   <!-- Hero Section Start -->
   <section class="hero" id="home">
-    <main class="content">
+    <main class="content" id="About">
       <h1>About</h1>
       <p>
         "Explore property sales trends in Staten Island and discover key information such as average 
@@ -88,29 +89,37 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <div class="chart-item">
+      <div class="chart-item" id="SalesTotalperBorough">
         <h4>SALES TOTAL PER BOROUGH</h4>
         <canvas id="chartTotalSalesByBorough"></canvas>
       </div>
     </div>
+
+    <div class="titleborough">
+      <h1 style="text-align: left;">Staten Island Borough</h1>
+    </div>
+    
     <div class="col-12">
-      <div class="chart-item">
+      <div class="chart-item" id="SalesTrendperMonth">
         <h4>SALES TREND PER MONTH</h4>
         <canvas id="lineChartSalesTrend"></canvas>
       </div>
     </div>
     <div class="col-6">
-      <div class="chart-item">
+      <div class="chart-item" id="Top5BuildingClassCategory">
         <h4>TOP 5 BUILDING CLASS</h4>
         <canvas id="PieChartTop5"></canvas>
       </div>
     </div>
     <div class="col-6">
-      <div class="chart-item">
+      <div class="chart-item" id="SalesTotalperUnitType">
         <h4>SALES TOTAL PER UNIT TYPE</h4>
         <canvas id="ChartTrendPerUnit"></canvas>
       </div>
     </div>
+  </div>
+  <div class="chart-item" id="SalesTotalperBuildingClassCategory">
+    <h1>Sales Total per Building Class Category</h1>
   </div>
   <div class="row">
     <div class="col-4">
@@ -133,11 +142,11 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <div class="chart-item">
-        <h4>TABLE DATA</h4>
+      <div class="chart-item" id="DataTable">
+        <h4 style="font-size: 1.5rem;">DataTable</h4>
         <div>
           <table>
-            <h2>Table Data</h2>
+            <!-- <h2>Table Data</h2> -->
             <article id="product-table">
               <input type="text" id="table-search-input" placeholder="Search Product Detail">
             </div>
@@ -167,7 +176,7 @@
       <p>Allow us to introduce ourselves</p>
     </div>
 
-    <section class="services">
+    <section class="services" id="Teams">
       <div class="container">
         <div class="team-grid">
           <div class="team-leader">
