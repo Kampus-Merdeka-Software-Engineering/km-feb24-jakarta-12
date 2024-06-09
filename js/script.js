@@ -11,237 +11,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     const data = await getData();
     console.log(data);
 
-    //total sales per borough
-    const boroughData = processTotalSalesByBorough(data);
-    displayBarChart('chartTotalSalesByBorough', boroughData);
 
-    // sales trend per month for Staten Island
-    const salesTrendData = processSalesTrendDataForStatenIsland(data);
-    displayLineChart('lineChartSalesTrend', salesTrendData);
-
-    //  top 5 building class
-    const buildingClassData = processTop5BuildingClass(data);
-    displayPieChart('PieChartTop5', buildingClassData);
 
     //  sale price and residential unit
     const comparisonData = processComparisonDataForStatenIsland(data);
     displayComparisonBarChart('chartComparison', comparisonData);
 });
 
-function processTotalSalesByBorough(data) {
-    const listBorough = data.reduce((acc, item) => {
-        const key = item.BOROUGH_NAME;
-        if (!acc[key]) acc[key] = 0;
-        acc[key] += item.TOTAL_SALES;
-        return acc;
-    }, {});
-
-    const arrayBorough = Object.keys(listBorough).map(key => ({
-        x: key,
-        y: listBorough[key]
-    }));
-
-    console.log(arrayBorough);
-    return {
-        labels: arrayBorough.map(item => item.x),
-        datasets: [{
-            data: arrayBorough.map(item => item.y),
-            label: 'Sales Total',
-            backgroundColor: [
-                '#0e0e70',  
-            ],
-            borderColor: [
-                'rgba(0, 0, 139, 1)',      
-            ],
-            borderWidth: 1
-        }]
-    };
-}
-
-function processSalesTrendDataForStatenIsland(data) {
-    const statenIslandData = data.filter(item => item.BOROUGH_NAME === 'Staten Island');
-    console.log("Staten Island Data:", statenIslandData);
-
-    const salesByMonth = {};
-
-    statenIslandData.forEach(item => {
-        const [month, year] = item.MON_YYYY.split('-');
-        const monthYear = `${month}-${parseInt(year) < 50 ? 20 : 19}${year}`;
-        const totalSales = parseFloat(item.TOTAL_SALES);
-        if (!salesByMonth[monthYear]) {
-            salesByMonth[monthYear] = 0;
-        }
-        salesByMonth[monthYear] += totalSales;
-    });
-
-    console.log("Sales by Month (before sorting):", salesByMonth);
-
-    const sortedSalesData = Object.keys(salesByMonth).map(key => ({
-        month: key,
-        sales: salesByMonth[key]
-    })).sort((a, b) => {
-        const [monthA, yearA] = a.month.split('-');
-        const [monthB, yearB] = b.month.split('-');
-        const dateA = new Date(`${yearA}-${monthA}-01`);
-        const dateB = new Date(`${yearB}-${monthB}-01`);
-        if (dateA.getFullYear() !== dateB.getFullYear()) {
-            return dateA.getFullYear() - dateB.getFullYear();
-        } else {
-            return dateA.getMonth() - dateB.getMonth();
-        }
-    });
-
-    console.log("Sorted Sales Data:", sortedSalesData);
-
-    const labels = sortedSalesData.map(item => item.month);
-    const dataValues = sortedSalesData.map(item => item.sales);
-
-    console.log("Labels:", labels);
-    console.log("Data Values:", dataValues);
-
-    return {
-        labels: labels,
-        datasets: [{
-            label: 'Total Sales',
-            data: dataValues,
-            borderColor: '#0e0e70',
-            backgroundColor: '#0e0e70',
-            fill: false,
-            borderWidth: 1
-        }]
-    };
-}
-
-
-function displayBarChart(canvasId, chartData) {
-    if (barchart != null) {
-        barchart.destroy();
-    }
-
-    const ctx = document.getElementById(canvasId);
-
-    barchart = new Chart(ctx, {
-        type: 'bar',
-        data: chartData,
-        options: {
-            responsive: true,
-            indexAxis: 'y',
-            scales: {
-                x: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Total Sales' 
-                    }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Borough' 
-                    }
-                }
-            }
-        }
-    });
-}
-
-function displayLineChart(canvasId, chartData) {
-    const ctx = document.getElementById(canvasId);
-    new Chart(ctx, {
-        type: 'line',
-        data: chartData,
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Month-Year' 
-                    }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Total Sales' 
-                    }
-                }
-            }
-        }
-    });
-}
-
-
-function displayComparisonBarChart(canvasId, chartData) {
-    const ctx = document.getElementById(canvasId);
-    new Chart(ctx, {
-        type: 'bar',
-        data: chartData,
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-}
-
-function processTop5BuildingClass(data) {
-    const statenIslandData = data.filter(item => item.BOROUGH_NAME === 'Staten Island');
-
-    const listBuildingClass = statenIslandData.reduce((acc, item) => {
-        const key = item.BUILDING_CLASS_CATEGORY;
-        if (!acc[key]) acc[key] = 0;
-        acc[key] += item.TOTAL_SALES;
-        return acc;
-    }, {});
-
-    const arrayBuildingClass = Object.keys(listBuildingClass).map(key => ({
-        label: key,
-        value: listBuildingClass[key]
-    })).sort((a, b) => b.value - a.value).slice(0, 5);
-
-    console.log(arrayBuildingClass);
-    return {
-        labels: arrayBuildingClass.map(item => item.label),
-        datasets: [{
-            data: arrayBuildingClass.map(item => item.value),
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)'
-            ],
-            borderWidth: 1
-        }]
-    };
-}
-
-function displayPieChart(canvasId, chartData) {
-    const ctx = document.getElementById(canvasId);
-    new Chart(ctx, {
-        type: 'pie',
-        data: chartData,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'right',
-
-                },
-            },
-        },
-    });
-}
 
 
 
@@ -407,7 +183,8 @@ function displayTrenBuilding(chartId, chartData, label) {
             plugins: {
                 title: {
                     display: true,
-                    text: `Total Sales ${label}`
+                    text: `Total Sales ${label}`,
+                    position: 'bottom',
                 },
                 tooltip: {
                     callbacks: {
@@ -619,4 +396,269 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     tableSearchInput.addEventListener('input', handleSearchData);
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    var ctx = document.getElementById('chartTotalSalesByBorough').getContext('2d');
+    var monthSelect = document.getElementById('monthSelect');
+
+    // Function to fetch JSON file
+    function fetchJSONFile(path, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                callback(JSON.parse(xhr.responseText));
+            }
+        };
+        xhr.open('GET', path, true);
+        xhr.send();
+    }
+
+    // Function to update chart based on selected month
+    function updateChart(selectedMonth) {
+        fetchJSONFile('data/borough.json', function (data) {
+            var boroughSales = {};
+
+            // Filter data based on selected month
+            data.forEach(function (item) {
+                var monthYear = item.MONTH_YEAR;
+                if (selectedMonth === 'all' || monthYear === selectedMonth) {
+                    var boroughName = item.BOROUGH_NAME;
+                    var totalSales = parseFloat(item.TOTAL_SALES);
+
+                    if (boroughSales[boroughName]) {
+                        boroughSales[boroughName] += totalSales;
+                    } else {
+                        boroughSales[boroughName] = totalSales;
+                    }
+                }
+            });
+
+            var chartData = {
+                labels: Object.keys(boroughSales),
+                datasets: [{
+                    label: 'Total Sales',
+                    borderColor: '#0e0e70',
+                    backgroundColor: '#0e0e70',
+                    borderWidth: 1,
+                    data: Object.values(boroughSales)
+                }]
+            };
+
+            var options = {
+                indexAxis: 'y', // Make the chart horizontal
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    }
+                }
+            };
+
+            // Destroy the existing chart if it exists
+            if (window.myChart instanceof Chart) {
+                window.myChart.destroy();
+            }
+
+            // Create new chart
+            window.myChart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: options
+            });
+        });
+    }
+
+    // Event listener for month select change
+    monthSelect.addEventListener('change', function () {
+        var selectedMonth = monthSelect.value;
+        updateChart(selectedMonth);
+    });
+
+    // Initial chart creation
+    updateChart('all');
+});
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    var ctx = document.getElementById('lineChartSalesTrend').getContext('2d');
+    var monthSelect = document.getElementById('monthSelect');
+
+    // Function to fetch JSON file
+    function fetchJSONFile(path, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                callback(JSON.parse(xhr.responseText));
+            }
+        };
+        xhr.open('GET', path, true);
+        xhr.send();
+    }
+
+    // Fetch data and draw chart
+    fetchJSONFile('data/borough.json', function (data) {
+        var salesData = data.filter(function (item) {
+            return item.BOROUGH_NAME === 'Staten Island';
+        });
+
+        var labels = [];
+        var sales = [];
+
+        salesData.forEach(function (item) {
+            labels.push(getMonthYear(item.MONTH_YEAR));
+            sales.push(parseFloat(item.TOTAL_SALES));
+        });
+
+        var lineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Sales',
+                    data: sales,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Month and Year'
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Total Sales'
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function (value, index, values) {
+                                return '$' + value; // Add $ sign to y-axis values
+                            }
+                        }
+                    }]
+                }
+            }
+        });
+    });
+
+    // Function to get month and year from month-year string
+    function getMonthYear(monthYear) {
+        var parts = monthYear.split('-');
+        var month = parseInt(parts[1], 10);
+        var year = parts[0];
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return months[month - 1] + ' ' + year;
+    }
+});
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    var ctx = document.getElementById('PieChartTop5').getContext('2d');
+    var monthSelect = document.getElementById('monthSelect');
+    var chart;
+    var allData;
+
+    // Function to fetch JSON file
+    function fetchJSONFile(path, callback) {
+        fetch(path)
+            .then(response => response.json())
+            .then(data => callback(data))
+            .catch(error => console.error('Error loading data:', error));
+    }
+
+    // Function to update chart based on selected month
+    function updateChart() {
+        var selectedMonth = monthSelect.value;
+        var salesByCategory = {};
+
+        // Filter and aggregate data based on selected month
+        allData.forEach(function (item) {
+            var monthYear = item.MONTH_YEAR;
+            if (selectedMonth === 'all' || monthYear === selectedMonth) {
+                var buildingCategory = item.BUILDING_CLASS_CATEGORY;
+                var totalSales = parseFloat(item.TOTAL_SALES);
+
+                if (salesByCategory[buildingCategory]) {
+                    salesByCategory[buildingCategory] += totalSales;
+                } else {
+                    salesByCategory[buildingCategory] = totalSales;
+                }
+            }
+        });
+
+        // Get top 5 categories
+        var top5Categories = Object.entries(salesByCategory)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5);
+
+        var labels = top5Categories.map(item => item[0]);
+        var sales = top5Categories.map(item => item[1]);
+
+        var chartData = {
+            labels: labels,
+            datasets: [{
+                label: 'Total Sales',
+                backgroundColor: [
+                    'rgb(166, 119, 255)',
+                    'rgb(88, 37, 168)',
+                    'rgb(82, 74, 187)',
+                    '#a5a7f8',
+                    '#0e0e70'
+                ],
+                borderColor: [
+                    'rgb(0, 0, 0)'
+                ],
+                borderWidth: 1,
+                data: sales
+            }]
+        };
+
+        var options = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+            }
+        };
+
+        // Destroy the existing chart if it exists
+        if (chart) {
+            chart.destroy();
+        }
+
+        // Create new chart
+        chart = new Chart(ctx, {
+            type: 'doughnut',
+            data: chartData,
+            options: options
+        });
+    }
+
+    // Initial data fetch and chart creation
+    fetchJSONFile('data/piechart.json', function (data) {
+        allData = data;
+        updateChart();
+    });
+
+    // Event listener for month select change
+    monthSelect.addEventListener('change', updateChart);
 });
