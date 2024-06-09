@@ -235,7 +235,8 @@ function displayPieChart(canvasId, chartData) {
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'bottom',
+                    position: 'right',
+
                 },
             },
         },
