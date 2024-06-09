@@ -25,21 +25,22 @@
         <a href="#" class="navbar-logo">NYC <span>Property Sales</span></a>
     </div>
 
-
     <div class="navbar-nav">
+      <a href="#About">About</a>
       <div class="dropdown">
-        <a href="#Date" class="dropbtn">Date &#9662;</a>
-        <div id="Date" class="dropdown-content">
+        <a href="#Data" class="dropbtn">Data &#9662;</a>
+        <div id="DataContent" class="dropdown-content">
+          <a href="#SalesTotalperBorough">Sales Total per Borough</a>
+          <a href="#SalesTrendperMonth">Sales Trend per Month</a>
+          <a href="#Top5BuildingClassCategory">Top 5 Building Class Category</a>
+          <a href="#SalesTotalperUnitType">Sales Total per Unit Type</a>
+          <a href="#SalesTotalperBuildingClassCategory">Sales Total per Building Class Category</a>
         </div>
       </div>
-      <div class="dropdown">
-        <a href="#BuildingClass" class="dropbtn">Building Class &#9662;</a>
-        <div id="buildingClassDropdown" class="dropdown-content">
-            <!-- Building class checkboxes will be added here dynamically -->
-        </div>
-    </div>
-
-      <button class="button" width="20px">Add Filter</button>
+      <a href="#DataTable" class="dropbtn">DataTable</a>
+      <a href="#Teams">Teams</a>
+      </div>
+      <!-- <button class="button" width="20px">Add Filter</button> -->
     </div>
     </div>
     
@@ -50,7 +51,7 @@
 
   <!-- Hero Section Start -->
   <section class="hero" id="home">
-    <main class="content">
+    <main class="content" id="About">
       <h1>About</h1>
       <p>
         "Explore property sales trends in Staten Island and discover key information such as average 
@@ -60,127 +61,114 @@
   </section>
   <!-- Hero Section End -->
 
-  <div class="stats-table">
-    <div class="item">
-      <h4>Total Sales Staten Island</h4>
-      <p>4,727,354,272</p>
+  <div class="row">
+    <div class="col-3">
+      <div class="item">
+        <h4>Total Sales Staten Island</h4>
+        <p>4,727,354,272</p>
+      </div>
     </div>
-    <div class="item">
-      <h4>Residential Units</h4>
-      <p>7,509</p>
+    <div class="col-3">
+      <div class="item">
+        <h4>Residential Units</h4>
+        <p>7,509</p>
+      </div>
     </div>
-    <div class="item">
-      <h4>Commercial Units</h4>
-      <p>501</p>
+    <div class="col-3">
+      <div class="item">
+        <h4>Commercial Units</h4>
+        <p>501</p>
+      </div>
     </div>
-    <div class="item">
-      <h4>Building Class</h4>
-      <p>26</p>
+    <div class="col-3">
+      <div class="item">
+        <h4>Building Class</h4>
+        <p>26</p>
+      </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="chart-item" id="SalesTotalperBorough">
+        <h4>SALES TOTAL PER BOROUGH</h4>
+        <canvas id="chartTotalSalesByBorough"></canvas>
+      </div>
+    </div>
 
-  <div class="chart-container">
-    <div class="chart">
-      <h2>SALES TOTAL PER BOROUGH</h2>
-      <div class="filter">
-        <div class="dropdown">
-          <button class="dropbtn">Filter</button>
-          <div class="dropdown-content">
-            <div>
-              <label for="date-filter-totalborough">Date:</label>
-              <select id="date-filter-totalborough" multiple>
-                <!-- Options will be populated dynamically -->
-              </select>
+    <div class="titleborough">
+      <h1 style="text-align: left;">Staten Island Borough</h1>
+    </div>
+    
+    <div class="col-12">
+      <div class="chart-item" id="SalesTrendperMonth">
+        <h4>SALES TREND PER MONTH</h4>
+        <canvas id="lineChartSalesTrend"></canvas>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="chart-item" id="Top5BuildingClassCategory">
+        <h4>TOP 5 BUILDING CLASS</h4>
+        <canvas id="PieChartTop5"></canvas>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="chart-item" id="SalesTotalperUnitType">
+        <h4>SALES TOTAL PER UNIT TYPE</h4>
+        <canvas id="ChartTrendPerUnit"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="chart-item" id="SalesTotalperBuildingClassCategory">
+    <h1>Sales Total per Building Class Category</h1>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <div class="chart-item">
+        <canvas id="chartTrenBuilding1"></canvas>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="chart-item">
+        <h4>SALES TOTAL PER UNIT TYPE</h4>
+        <canvas id="chartTrenBuilding2"></canvas>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="chart-item">
+        <h4>SALES TOTAL PER UNIT TYPE</h4>
+        <canvas id="chartTrenBuilding3"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="chart-item" id="DataTable">
+        <h4 style="font-size: 1.5rem;">DataTable</h4>
+        <div>
+          <table>
+            <!-- <h2>Table Data</h2> -->
+            <article id="product-table">
+              <input type="text" id="table-search-input" placeholder="Search Product Detail">
             </div>
-          </div>
-        </div>
-      </div>
-      <canvas id="chartTotalSalesByBorough" height="80px"></canvas>
-    </div>
-    <div class="charts">
-  <div class="chartt">
-    <h2>SALES TREND PER MONTH</h2>
-    <div class="filter">
-      <div class="dropdown">
-        <button class="dropbtn">Filter</button>
-        <div class="dropdown-content">
-          <div>
-            <label for="month-filter">Date:</label>
-            <select id="month-filter" multiple>
-              <!-- Options will be populated dynamically -->
-            </select>
-          </div>
+              <thead>
+              <tr>
+                <th id="sort-No" width="100px">No </th>
+                <th id="sort-category">Building Class Category <span id="sort-icon-category">&#x25B2;&#x25BC;</span></th>
+                <th id="sort-residential-units" width="400px">Residential Units <span
+                    id="sort-icon-residential-units">&#x25B2;&#x25BC;</span></th>
+                <th id="sort-commercial-units">Commercial Units <span id="sort-icon-commercial-units">&#x25B2;&#x25BC;</span>
+                </th>
+                <th id="sort-total-sales">Total Sales <span id="sort-icon-total-sales">&#x25B2;&#x25BC;</span></th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+          <div id="pagination" class="pagination"></div>
         </div>
       </div>
     </div>
-    <canvas id="lineChartSalesTrend"></canvas>
   </div>
-  <div class="chartt">
-    <h2>TOP 5 BUILDING CLASS</h2>
-    <div class="filter">
-      <div class="dropdown">
-        <button class="dropbtn">Filter</button>
-        <div class="dropdown-content">
-          <div>
-            <label for="date-filter-top5">Date:</label>
-            <select id="date-filter-top5" multiple>
-              <!-- Options will be populated dynamically -->
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-    <canvas id="PieChartTop5"></canvas>
-  </div>
-</div>
-
-    <div class="chartt">
-      <h2>SALES TOTAL PER UNIT TYPE</h2>
-      <div class="chart-container">
-        <canvas class="chart-size" id="ChartTrendPerUnit" height="80px"></canvas>
-      </div>
-    </div>
-
-    <h1>SALES TOTAL PER BUILDING CLASS CATEGORY</h1>
-    <div class="char">
-      <div class="chartt">
-        <canvas class="chart-size" id="chartTrenBuilding1" height="250px"></canvas>
-      </div>
-      <div class="chartt">
-        <canvas class="chart-size" id="chartTrenBuilding2" height="250px"></canvas>
-      </div>
-      <div class="chartt">
-        <canvas class="chart-size" id="chartTrenBuilding3" height="250px"></canvas>
-      </div>
-    </div>
-  </div>
-
-  
-    <table>
-      <div>
-      <h2>Table Data</h2>
-      <article id="product-table">
-        <input type="text" id="table-search-input" placeholder="Search Product Detail">
-      </div>
-        <thead>
-        <tr>
-          <th id="sort-No" width="100px">No </th>
-          <th id="sort-category">Building Class Category <span id="sort-icon-category">&#x25B2;&#x25BC;</span></th>
-          <th id="sort-residential-units" width="400px">Residential Units <span
-              id="sort-icon-residential-units">&#x25B2;&#x25BC;</span></th>
-          <th id="sort-commercial-units">Commercial Units <span id="sort-icon-commercial-units">&#x25B2;&#x25BC;</span>
-          </th>
-          <th id="sort-total-sales">Total Sales <span id="sort-icon-total-sales">&#x25B2;&#x25BC;</span></th>
-        </tr>
-      </thead>
-      <tbody id="table-body"></tbody>
-    </table>
-    <div id="pagination" class="pagination"></div>
   </article>
-
-
-
-
   <!-- services -->
   <div>
     <div class="footer-text">
@@ -188,7 +176,7 @@
       <p>Allow us to introduce ourselves</p>
     </div>
 
-    <section class="services">
+    <section class="services" id="Teams">
       <div class="container">
         <div class="team-grid">
           <div class="team-leader">
