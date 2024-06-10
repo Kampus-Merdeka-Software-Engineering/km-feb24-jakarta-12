@@ -161,32 +161,36 @@
 
   <div class="row">
     <div class="col-12">
-      <div class="chart-item" id="DataTable">
-        <h4 style="font-size: 1.5rem">Datatable</h4>
-        <div>
-          <table>
-            <article id="product-table">
-              <input type="text" id="table-search-input" placeholder="Search Product Detail">
+        <div class="chart-item" id="DataTable">
+            <h4 style="font-size: 1.5rem">Datatable</h4>
+            <div class="rows-selector">
+                <label for="rows-per-page">Rows per page:</label>
+                <select id="rows-per-page">
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+            <div>
+                <input type="text" id="table-search-input" placeholder="Search Product Detail">
+                <table>
+                    <thead class="head-table">
+                        <tr>
+                            <th id="sort-No">No</th>
+                            <th id="sort-category">Building Class Category <span id="sort-icon-category">&#x25B2;&#x25BC;</span></th>
+                            <th id="sort-residential-units">Residential Units <span id="sort-icon-residential-units">&#x25B2;&#x25BC;</span></th>
+                            <th id="sort-commercial-units">Commercial Units <span id="sort-icon-commercial-units">&#x25B2;&#x25BC;</span></th>
+                            <th id="sort-total-sales">Total Sales <span id="sort-icon-total-sales">&#x25B2;&#x25BC;</span></th>
+                        </tr>
+                    </thead>
+                    <tbody class="body-table" id="table-body"></tbody>
+                </table>
+                <div id="pagination" class="pagination"></div>
+            </div>
         </div>
-        <thead class="head-table">
-          <tr>
-            <th id="sort-No">No</th>
-            <th id="sort-category">Building Class Category <span id="sort-icon-category">&#x25B2;&#x25BC;</span></th>
-            <th id="sort-residential-units">Residential Units <span
-                id="sort-icon-residential-units">&#x25B2;&#x25BC;</span></th>
-            <th id="sort-commercial-units">Commercial Units <span
-                id="sort-icon-commercial-units">&#x25B2;&#x25BC;</span></th>
-            <th id="sort-total-sales">Total Sales <span id="sort-icon-total-sales">&#x25B2;&#x25BC;</span></th>
-          </tr>
-        </thead>
-        <tbody class="body-table" id="table-body"></tbody>
-        </table>
-        <div id="pagination" class="pagination"></div>
-      </div>
     </div>
-  </div>
-  </div>
-
+</div>
   <!-- services -->
   <div>
     <div class="footer-text" id="Teams">
