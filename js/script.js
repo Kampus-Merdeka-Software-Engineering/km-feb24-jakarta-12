@@ -119,11 +119,6 @@ function displayTotalSalesByUnit(canvasId, dataSets) {
 
 /*-------------sales total per building------------------*/
 
-async function getData() {
-  const response = await fetch(file);
-  const body = await response.json();
-  return body;
-}
 
 document.addEventListener('DOMContentLoaded', async (event) => {
   const data = await getData();
@@ -189,10 +184,17 @@ function displayTrenBuilding(chartId, chartData, label) {
     options: {
       responsive: true,
       plugins: {
+        legend: {
+          display: false,
+        },
         title: {
           display: true,
           text: `Total Sales ${label}`,
           position: 'bottom',
+          padding: {
+            top: 20,
+            bottom: 10,
+          },
         },
         tooltip: {
           callbacks: {
@@ -230,174 +232,188 @@ if (!Object.groupBy) {
 
 /*--------------------TABLE DATA----------------*/
 
-const itemsPerPage = 10;
+let itemsPerPage = 10; // initial items per page
 let currentPage = 1;
 const maxButtons = 4;
 let sortDirection = '';
 let currentSortColumn = '';
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const data = await getData();
-  const statenIslandData = filterDataByBorough(data, 'Staten Island');
-  let groupedData = groupByBuildingClass(statenIslandData);
-  let sortedData = groupedData.slice();
-  const tableBody = document.getElementById('table-body');
-  const pagination = document.getElementById('pagination');
-  const tableSearchInput = document.getElementById('table-search-input');
-  const sortBuildingClassHeader = document.getElementById('sort-category');
-  const sortResidentialUnitsHeader = document.getElementById('sort-residential-units');
-  const sortCommercialUnitsHeader = document.getElementById('sort-commercial-units');
-  const sortTotalSalesHeader = document.getElementById('sort-total-sales');
+    const data = await getData();
+    const statenIslandData = filterDataByBorough(data, 'Staten Island');
+    let groupedData = groupByBuildingClass(statenIslandData);
+    let sortedData = groupedData.slice();
+    const tableBody = document.getElementById('table-body');
+    const pagination = document.getElementById('pagination');
+    const tableSearchInput = document.getElementById('table-search-input');
+    const sortBuildingClassHeader = document.getElementById('sort-category');
+    const sortResidentialUnitsHeader = document.getElementById('sort-residential-units');
+    const sortCommercialUnitsHeader = document.getElementById('sort-commercial-units');
+    const sortTotalSalesHeader = document.getElementById('sort-total-sales');
+    const itemsPerPageSelect = document.getElementById('rows-per-page');
 
-  function filterDataByBorough(data, boroughName) {
-    return data.filter((item) => item['BOROUGH_NAME'] === boroughName);
-  }
+    function filterDataByBorough(data, boroughName) {
+        return data.filter((item) => item['BOROUGH_NAME'] === boroughName);
+    }
 
-  function groupByBuildingClass(data) {
-    const groups = {};
-    data.forEach((item) => {
-      const buildingClass = item['BUILDING_CLASS_CATEGORY'];
-      if (!groups[buildingClass]) {
-        groups[buildingClass] = {
-          BUILDING_CLASS_CATEGORY: buildingClass,
-          RESIDENTIAL_UNITS: 0,
-          COMMERCIAL_UNITS: 0,
-          TOTAL_SALES: 0,
-        };
-      }
-      groups[buildingClass]['RESIDENTIAL_UNITS'] += parseInt(item['RESIDENTIAL_UNITS']);
-      groups[buildingClass]['COMMERCIAL_UNITS'] += parseInt(item['COMMERCIAL_UNITS']);
-      groups[buildingClass]['TOTAL_SALES'] += parseFloat(item['TOTAL_SALES']);
-    });
-    return Object.values(groups);
-  }
+    function groupByBuildingClass(data) {
+        const groups = {};
+        data.forEach((item) => {
+            const buildingClass = item['BUILDING_CLASS_CATEGORY'];
+            if (!groups[buildingClass]) {
+                groups[buildingClass] = {
+                    BUILDING_CLASS_CATEGORY: buildingClass,
+                    RESIDENTIAL_UNITS: 0,
+                    COMMERCIAL_UNITS: 0,
+                    TOTAL_SALES: 0,
+                };
+            }
+            groups[buildingClass]['RESIDENTIAL_UNITS'] += parseInt(item['RESIDENTIAL_UNITS']);
+            groups[buildingClass]['COMMERCIAL_UNITS'] += parseInt(item['COMMERCIAL_UNITS']);
+            groups[buildingClass]['TOTAL_SALES'] += parseFloat(item['TOTAL_SALES']);
+        });
+        return Object.values(groups);
+    }
 
-  function handleSearchData(event) {
-    const value = event.target.value.trim().toLowerCase();
-    sortedData = groupedData.filter((item) => {
-      return item['BUILDING_CLASS_CATEGORY'].toLowerCase().includes(value);
-    });
-    currentPage = 1;
-    displayItems();
-    displayPagination();
-  }
+    function handleSearchData(event) {
+        const value = event.target.value.trim().toLowerCase();
+        sortedData = groupedData.filter((item) => {
+            return item['BUILDING_CLASS_CATEGORY'].toLowerCase().includes(value);
+        });
+        currentPage = 1;
+        displayItems();
+        displayPagination();
+    }
 
-  function displayItems() {
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    const paginatedItems = sortedData.slice(start, end);
+    function displayItems() {
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const paginatedItems = sortedData.slice(start, end);
 
-    tableBody.innerHTML = '';
-    paginatedItems.forEach((item, index) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
+        tableBody.innerHTML = '';
+        paginatedItems.forEach((item, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
                 <td>${start + index + 1}</td>
                 <td>${item['BUILDING_CLASS_CATEGORY']}</td>
                 <td>${item['RESIDENTIAL_UNITS']}</td>
                 <td>${item['COMMERCIAL_UNITS']}</td>
                 <td>${item['TOTAL_SALES']}</td>
             `;
-      tableBody.appendChild(row);
-    });
-  }
-
-  function sortByColumn(column) {
-    if (currentSortColumn === column) {
-      sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
-    } else {
-      sortDirection = 'asc';
-      currentSortColumn = column;
+            tableBody.appendChild(row);
+        });
     }
 
-    sortedData.sort((a, b) => {
-      let valueA = a[column];
-      let valueB = b[column];
-      if (typeof valueA === 'number' && typeof valueB === 'number') {
-        return sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
-      } else {
-        return sortDirection === 'asc' ? valueA.toString().localeCompare(valueB.toString()) : valueB.toString().localeCompare(valueA.toString());
-      }
+    function sortByColumn(column) {
+        if (currentSortColumn === column) {
+            sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortDirection = 'asc';
+            currentSortColumn = column;
+        }
+
+        sortedData.sort((a, b) => {
+            let valueA = a[column];
+            let valueB = b[column];
+            if (typeof valueA === 'number' && typeof valueB === 'number') {
+                return sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
+            } else {
+                return sortDirection === 'asc' ? valueA.toString().localeCompare(valueB.toString()) : valueB.toString().localeCompare(valueA.toString());
+            }
+        });
+
+        currentPage = 1;
+        displayItems();
+        displayPagination();
+        updateSortIcon(column);
+    }
+
+    function updateSortIcon(column) {
+        const sortIcons = {
+            BUILDING_CLASS_CATEGORY: document.getElementById('sort-icon-category'),
+            RESIDENTIAL_UNITS: document.getElementById('sort-icon-residential-units'),
+            COMMERCIAL_UNITS: document.getElementById('sort-icon-commercial-units'),
+            TOTAL_SALES: document.getElementById('sort-icon-total-sales'),
+        };
+
+        Object.keys(sortIcons).forEach((key) => {
+            sortIcons[key].classList.remove('sort-icon-asc', 'sort-icon-desc');
+            sortIcons[key].innerHTML = '&#x25B2;&#x25BC;';
+        });
+
+        if (sortIcons[column]) {
+            sortIcons[column].innerHTML = sortDirection === 'asc' ? '&#x25B2;' : '&#x25BC;';
+            sortIcons[column].classList.add(sortDirection === 'asc' ? 'sort-icon-asc' : 'sort-icon-desc');
+        }
+    }
+
+    function displayPagination() {
+        const totalPages = Math.ceil(sortedData.length / itemsPerPage);
+        pagination.innerHTML = '';
+        const startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+        const endPage = Math.min(totalPages, startPage + maxButtons - 1);
+
+        if (startPage > 1) {
+            pagination.appendChild(createPaginationButton('Prev', currentPage - 1));
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            pagination.appendChild(createPaginationButton(i, i));
+        }
+
+        if (endPage < totalPages) {
+            pagination.appendChild(createPaginationButton('Next', currentPage + 1));
+        }
+    }
+
+    function createPaginationButton(label, pageNumber) {
+        const button = document.createElement('button');
+        button.textContent = label;
+        if (pageNumber === currentPage) {
+            button.classList.add('active');
+        }
+        button.addEventListener('click', () => {
+            currentPage = pageNumber;
+            displayItems();
+            displayPagination();
+        });
+        return button;
+    }
+
+    itemsPerPageSelect.addEventListener('change', (event) => {
+        itemsPerPage = parseInt(event.target.value);
+        currentPage = 1;
+        displayItems();
+        displayPagination();
     });
 
-    currentPage = 1;
     displayItems();
     displayPagination();
-    updateSortIcon(column);
-  }
 
-  function updateSortIcon(column) {
-    const sortIcons = {
-      BUILDING_CLASS_CATEGORY: document.getElementById('sort-icon-category'),
-      RESIDENTIAL_UNITS: document.getElementById('sort-icon-residential-units'),
-      COMMERCIAL_UNITS: document.getElementById('sort-icon-commercial-units'),
-      TOTAL_SALES: document.getElementById('sort-icon-total-sales'),
-    };
-
-    Object.keys(sortIcons).forEach((key) => {
-      sortIcons[key].classList.remove('sort-icon-asc', 'sort-icon-desc');
-      sortIcons[key].innerHTML = '&#x25B2;&#x25BC;';
+    sortBuildingClassHeader.addEventListener('click', () => {
+        sortByColumn('BUILDING_CLASS_CATEGORY');
     });
 
-    if (sortIcons[column]) {
-      sortIcons[column].innerHTML = sortDirection === 'asc' ? '&#x25B2;' : '&#x25BC;';
-      sortIcons[column].classList.add(sortDirection === 'asc' ? 'sort-icon-asc' : 'sort-icon-desc');
-    }
-  }
-
-  function displayPagination() {
-    const totalPages = Math.ceil(sortedData.length / itemsPerPage);
-    pagination.innerHTML = '';
-    const startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
-    const endPage = Math.min(totalPages, startPage + maxButtons - 1);
-
-    if (startPage > 1) {
-      pagination.appendChild(createPaginationButton('Prev', currentPage - 1));
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pagination.appendChild(createPaginationButton(i, i));
-    }
-
-    if (endPage < totalPages) {
-      pagination.appendChild(createPaginationButton('Next', currentPage + 1));
-    }
-  }
-
-  function createPaginationButton(label, pageNumber) {
-    const button = document.createElement('button');
-    button.textContent = label;
-    if (pageNumber === currentPage) {
-      button.classList.add('active');
-    }
-    button.addEventListener('click', () => {
-      currentPage = pageNumber;
-      displayItems();
-      displayPagination();
+    sortResidentialUnitsHeader.addEventListener('click', () => {
+        sortByColumn('RESIDENTIAL_UNITS');
     });
-    return button;
-  }
 
-  displayItems();
-  displayPagination();
+    sortCommercialUnitsHeader.addEventListener('click', () => {
+        sortByColumn('COMMERCIAL_UNITS');
+    });
 
-  sortBuildingClassHeader.addEventListener('click', () => {
-    sortByColumn('BUILDING_CLASS_CATEGORY');
-  });
+    sortTotalSalesHeader.addEventListener('click', () => {
+        sortByColumn('TOTAL_SALES');
+    });
 
-  sortResidentialUnitsHeader.addEventListener('click', () => {
-    sortByColumn('RESIDENTIAL_UNITS');
-  });
-
-  sortCommercialUnitsHeader.addEventListener('click', () => {
-    sortByColumn('COMMERCIAL_UNITS');
-  });
-
-  sortTotalSalesHeader.addEventListener('click', () => {
-    sortByColumn('TOTAL_SALES');
-  });
-
-  tableSearchInput.addEventListener('input', handleSearchData);
+    tableSearchInput.addEventListener('input', handleSearchData);
 });
+
+async function getData() {
+    const response = await fetch(file);
+    const body = await response.json();
+    return body;
+}
 
 
 
@@ -618,8 +634,10 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch(path)
       .then((response) => response.json())
       .then((data) => callback(data))
-      .catch((error) => console.error('Error loading data:', error));
-  }
+      .catch((error) => {
+        alert('Error message: ' + error.message + '\nURL: ' + path);
+      });
+  }  
 
   
   function updateChart() {
