@@ -539,7 +539,7 @@ fetch('data/tren.json')
       data: {
         labels: processedData.labels,
         datasets: [{
-          label: 'Total Penjualan',
+          label: 'Total Sales',
           data: processedData.totalSales,
           borderColor: '#3e95cd',
           fill: false
