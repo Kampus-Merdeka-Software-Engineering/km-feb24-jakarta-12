@@ -557,7 +557,7 @@ fetch('data/tren.json')
           y: {
             title: {
               display: true,
-              text: 'Total Penjualan'
+              text: 'Total Sales'
             }
           }
         }
