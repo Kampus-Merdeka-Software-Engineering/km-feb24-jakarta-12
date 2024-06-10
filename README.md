@@ -6,6 +6,7 @@
 - Quality Assurance: Fidela Citra Imanda & Muhdad Alfaris Bahmid
 
 # About Project
+Explore property sales trends in Staten Island and discover key information such as average prices and other important statistics to help you make better property investment decisions in this borough.
 
 # Function
 
