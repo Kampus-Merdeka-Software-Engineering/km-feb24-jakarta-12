@@ -712,7 +712,7 @@ footer .wave#wave2 {
   z-index: 999;
   opacity: 0.5;
   bottom: 10px;
-  animation: animateWave2 4s linear infinite;
+  animation: animateWave3 4s linear infinite;
 }
 
 footer .wave#wave3 {
@@ -726,7 +726,7 @@ footer .wave#wave4 {
   z-index: 997;
   opacity: 0.7;
   bottom: 20px;
-  animation: animateWave2 3.5s linear infinite;
+  animation: animateWave3 3.5s linear infinite;
 }
 
 @keyframes animateWave {
