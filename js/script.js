@@ -7,33 +7,26 @@ async function getData() {
   return body;
 }
 
+
+const filterDataByMonth = (data, months) => {
+  return data.filter(({ BOROUGH_NAME, MON_YYYY }) => {
+    const [month, year] = MON_YYYY.split('-');
+    const monthIndex = new Date(`${month} 1, ${year}`).getMonth() + 1;
+    return BOROUGH_NAME === 'Staten Island' && months.includes(monthIndex);
+  });
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await getData();
 
-
-  //  sale price and residential unit
+  // sale price and residential unit
   const comparisonData = processComparisonDataForStatenIsland(data);
   displayComparisonBarChart('chartComparison', comparisonData);
 });
 
 /*-------------sales total per unit------------------*/
-
-async function getData() {
-  const response = await fetch(file);
-  const body = await response.json();
-  return body;
-}
-
 document.addEventListener('DOMContentLoaded', async (event) => {
   const data = await getData();
-
-  const filterDataByMonth = (data, months) => {
-    return data.filter(({ BOROUGH_NAME, MON_YYYY }) => {
-      const [month, year] = MON_YYYY.split('-');
-      const monthIndex = new Date(`${month} 1, ${year}`).getMonth() + 1;
-      return BOROUGH_NAME === 'Staten Island' && months.includes(monthIndex);
-    });
-  };
 
   const calculateTotalSales = (data) => {
     return {
@@ -114,22 +107,12 @@ function displayTotalSalesByUnit(canvasId, dataSets) {
     },
   };
 
-  new Chart(ctx, config);
+  const myChart = new Chart(ctx, config);
 }
 
 /*-------------sales total per building------------------*/
-
-
 document.addEventListener('DOMContentLoaded', async (event) => {
   const data = await getData();
-
-  const filterDataByMonth = (data, months) => {
-    return data.filter(({ BOROUGH_NAME, MON_YYYY }) => {
-      const [month, year] = MON_YYYY.split('-');
-      const monthIndex = new Date(`${month} 1, ${year}`).getMonth() + 1;
-      return BOROUGH_NAME === 'Staten Island' && months.includes(monthIndex);
-    });
-  };
 
   const groupByBuildingClass = (data) => {
     return Object.entries(
@@ -142,6 +125,65 @@ document.addEventListener('DOMContentLoaded', async (event) => {
         return result;
       }, {})
     ).map(([buildingClass, value]) => ({ buildingClass, value }));
+  };
+
+  const filterDataByMonth = (data, months) => {
+    return data.filter((item) => months.includes(new Date(item.SALE_DATE).getMonth() + 1));
+  };
+
+  const displayTrenBuilding = (chartId, chartData, label) => {
+    const ctx = document.getElementById(chartId).getContext('2d');
+
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: chartData.map((data) => data.buildingClass),
+        datasets: [
+          {
+            data: chartData.map((data) => data.value),
+            label: 'Sale Price',
+            backgroundColor: '#a5a7f8',
+            borderColor: '#a5a7f8',
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: true,
+            text: `Total Sales ${label}`,
+            position: 'bottom',
+            padding: {
+              top: 20,
+              bottom: 10,
+            },
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                return `${context.dataset.label}: ${context.raw}`;
+              },
+            },
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Total Sales',
+            },
+          },
+        },
+      },
+    });
+
+    return chart; 
   };
 
   const filteredDataFebMar = filterDataByMonth(data, [2, 3]);
@@ -159,63 +201,11 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     .sort((a, b) => b.value - a.value)
     .slice(0, 5);
 
+  // Menggunakan objek Chart yang dibuat
   displayTrenBuilding('chartTrenBuilding1', topBuildingClassesFebMar, 'Feb-Mar');
   displayTrenBuilding('chartTrenBuilding2', topBuildingClassesMarApr, 'Mar-Apr');
   displayTrenBuilding('chartTrenBuilding3', topBuildingClassesJulAug, 'Jul-Aug');
 });
-
-function displayTrenBuilding(chartId, chartData, label) {
-  const ctx = document.getElementById(chartId).getContext('2d');
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: chartData.map((data) => data.buildingClass),
-      datasets: [
-        {
-          data: chartData.map((data) => data.value),
-          label: 'Sale Price',
-          backgroundColor: '#a5a7f8',
-          borderColor: '#a5a7f8',
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: false,
-        },
-        title: {
-          display: true,
-          text: `Total Sales ${label}`,
-          position: 'bottom',
-          padding: {
-            top: 20,
-            bottom: 10,
-          },
-        },
-        tooltip: {
-          callbacks: {
-            label: function (context) {
-              return `${context.dataset.label}: ${context.raw}`;
-            },
-          },
-        },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          title: {
-            display: true,
-            text: 'Total Sales',
-          },
-        },
-      },
-    },
-  });
-}
 
 if (!Object.groupBy) {
   Object.groupBy = function (array, keyFunc) {
@@ -232,7 +222,7 @@ if (!Object.groupBy) {
 
 /*--------------------TABLE DATA----------------*/
 
-let itemsPerPage = 10; // initial items per page
+let itemsPerPage = 10; 
 let currentPage = 1;
 const maxButtons = 4;
 let sortDirection = '';
@@ -409,22 +399,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     tableSearchInput.addEventListener('input', handleSearchData);
 });
 
-async function getData() {
-    const response = await fetch(file);
-    const body = await response.json();
-    return body;
-}
-
-
 
 /*-----sales borough-----*/
 document.addEventListener('DOMContentLoaded', function () {
-  var ctx = document.getElementById('chartTotalSalesByBorough').getContext('2d');
-  var monthSelect = document.getElementById('monthSelect');
+  const ctx = document.getElementById('chartTotalSalesByBorough').getContext('2d');
+  const monthSelect = document.getElementById('monthSelect');
 
-  // Function to fetch JSON file
   function fetchJSONFile(path, callback) {
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         callback(JSON.parse(xhr.responseText));
@@ -434,17 +416,15 @@ document.addEventListener('DOMContentLoaded', function () {
     xhr.send();
   }
 
-  // Function to update chart based on selected month
   function updateChart(selectedMonth) {
     fetchJSONFile('data/borough.json', function (data) {
-      var boroughSales = {};
+      const boroughSales = {};
 
-      // Filter data based on selected month
       data.forEach(function (item) {
-        var monthYear = item.MONTH_YEAR;
+        const monthYear = item.MONTH_YEAR;
         if (selectedMonth === 'all' || monthYear === selectedMonth) {
-          var boroughName = item.BOROUGH_NAME;
-          var totalSales = parseFloat(item.TOTAL_SALES);
+          const boroughName = item.BOROUGH_NAME;
+          const totalSales = parseFloat(item.TOTAL_SALES);
 
           if (boroughSales[boroughName]) {
             boroughSales[boroughName] += totalSales;
@@ -454,10 +434,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
 
-     
-      var sortedBoroughSales = Object.entries(boroughSales).sort((a, b) => b[1] - a[1]);
+      const sortedBoroughSales = Object.entries(boroughSales).sort((a, b) => b[1] - a[1]);
 
-      var chartData = {
+      const chartData = {
         labels: sortedBoroughSales.map(item => item[0]), 
         datasets: [
           {
@@ -470,7 +449,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ],
       };
 
-      var options = {
+      const options = {
         indexAxis: 'y', 
         scales: {
           x: {
@@ -495,12 +474,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       };
 
-      
       if (window.myChart instanceof Chart) {
         window.myChart.destroy();
       }
 
-      
       window.myChart = new Chart(ctx, {
         type: 'bar',
         data: chartData,
@@ -509,16 +486,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-
   monthSelect.addEventListener('change', function () {
-    var selectedMonth = monthSelect.value;
+    const selectedMonth = monthSelect.value;
     updateChart(selectedMonth);
   });
 
   updateChart('all');
 });
-
-
 
 
 
@@ -623,12 +597,11 @@ function updateChart(chart, data) {
 
 
 /*-------pie chart-----*/
-
 document.addEventListener('DOMContentLoaded', function () {
-  var ctx = document.getElementById('PieChartTop5').getContext('2d');
-  var monthSelect = document.getElementById('monthSelect');
-  var chart;
-  var allData;
+  const ctx = document.getElementById('PieChartTop5').getContext('2d');
+  const monthSelect = document.getElementById('monthSelect');
+  let chart;
+  let allData;
 
   function fetchJSONFile(path, callback) {
     fetch(path)
@@ -639,17 +612,16 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }  
 
-  
   function updateChart() {
-    var selectedMonth = monthSelect.value;
-    var salesByCategory = {};
+    const selectedMonth = monthSelect.value;
+    const salesByCategory = {};
 
     // Filter and aggregate data 
     allData.forEach(function (item) {
-      var monthYear = item.MONTH_YEAR;
+      const monthYear = item.MONTH_YEAR;
       if (selectedMonth === 'all' || monthYear === selectedMonth) {
-        var buildingCategory = item.BUILDING_CLASS_CATEGORY;
-        var totalSales = parseFloat(item.TOTAL_SALES);
+        const buildingCategory = item.BUILDING_CLASS_CATEGORY;
+        const totalSales = parseFloat(item.TOTAL_SALES);
 
         if (salesByCategory[buildingCategory]) {
           salesByCategory[buildingCategory] += totalSales;
@@ -659,15 +631,14 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    
-    var top5Categories = Object.entries(salesByCategory)
+    const top5Categories = Object.entries(salesByCategory)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5);
 
-    var labels = top5Categories.map((item) => item[0]);
-    var sales = top5Categories.map((item) => item[1]);
+    const labels = top5Categories.map((item) => item[0]);
+    const sales = top5Categories.map((item) => item[1]);
 
-    var chartData = {
+    const chartData = {
       labels: labels,
       datasets: [
         {
@@ -680,7 +651,7 @@ document.addEventListener('DOMContentLoaded', function () {
       ],
     };
 
-    var options = {
+    const options = {
       responsive: true,
       layout: {
         padding: {
@@ -693,7 +664,6 @@ document.addEventListener('DOMContentLoaded', function () {
         },
       },
     };
-
 
     if (chart) {
       chart.destroy();
@@ -709,7 +679,7 @@ document.addEventListener('DOMContentLoaded', function () {
   fetchJSONFile('data/piechart.json', function (data) {
     allData = data;
     updateChart();
-
   });
+
   monthSelect.addEventListener('change', updateChart);
 });
