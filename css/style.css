@@ -105,7 +105,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   background-color: var(--bg-light);
   border-bottom: 1px solid var(--primary);
   position: fixed;
@@ -521,9 +522,7 @@ tr {
 /*-------------------------------------*/
 
 /* Team  */
-.team {
-  padding: 1rem 7% 1.4rem;
-}
+
 
 a {
   text-decoration: none;
@@ -540,7 +539,7 @@ a {
 
 .heading {
   font-size: 1.3rem;
-  color: #2c2c2c;
+  color: var(--primary);
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -548,7 +547,7 @@ a {
 }
 
 .heading i {
-  background-color: #333;
+  background-color: var(--primary);
   color: #fff;
   width: 50px;
   height: 50px;
@@ -561,8 +560,8 @@ a {
 
 .box {
   width: 266px;
-  height: 340px;
-  background-color: #d6d6d6;
+  height: 275px;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -587,7 +586,7 @@ a {
   left: 50%;
   top: 0;
   transform: translate(-50%);
-  background-color: rgb(19, 14, 14);
+  background-color: var(--primary);
   border-radius: 0 0 10px 10px;
 }
 
@@ -636,12 +635,12 @@ a {
 
 .details p {
   font-size: 0.8rem;
-  color: #333;
-  margin: 5px 0;
+  color: var(--primary);
+  /* margin: 5px 0; */
 }
 
 .details strong {
-  color: #333;
+  color: var(--primary);
   font-size: 1rem;
   margin: 10px 0;
 }
@@ -660,7 +659,7 @@ a {
   border-radius: 10px;
   font-size: 22px;
   line-height: 45px;
-  color: #333;
+  color: var(--primary);
 }
 
 .btn a i {
@@ -669,7 +668,7 @@ a {
 
 .btn a:hover {
   color: #fff;
-  background-color: #333;
+  background-color: var(--primary);
   transition: all ease 0.3s;
 }
 
@@ -694,6 +693,7 @@ a {
 }
 
 .footer-text h1 {
+  margin-top: 40px;
   margin-bottom: 0;
   text-align: center;
   color: var(--bg);
