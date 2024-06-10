@@ -243,6 +243,7 @@ body {
 
 @media screen and (max-width: 600px) {
   .navbar-nav {
+    display: block;
     flex-direction: column;
     align-items: flex-start;
   }
@@ -262,18 +263,16 @@ body {
     text-align: left;
   }
 
-  /* .navbar-left img{
+  .navbar-left img {
     height: 50px;
     width: 50px;
   }
 
-  .navbar-left a{
-    font-size: 1rem;
-  } 
+  .navbar-left a {
+    font-size: 1.2rem;
+  }
 
-  .navbar .navbar-nav a {
-    font-size: 0.5rem;
-  } */
+  .navbar .navbar-nav a {}
 }
 
 /* Hero Section */
