@@ -7,7 +7,7 @@ async function getData() {
   return body;
 }
 
-
+// Fungsi filterDataByMonth() dipindahkan ke sini
 const filterDataByMonth = (data, months) => {
   return data.filter(({ BOROUGH_NAME, MON_YYYY }) => {
     const [month, year] = MON_YYYY.split('-');
@@ -19,12 +19,13 @@ const filterDataByMonth = (data, months) => {
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await getData();
 
-  // sale price and residential unit
+  //  sale price and residential unit
   const comparisonData = processComparisonDataForStatenIsland(data);
   displayComparisonBarChart('chartComparison', comparisonData);
 });
 
 /*-------------sales total per unit------------------*/
+
 document.addEventListener('DOMContentLoaded', async (event) => {
   const data = await getData();
 
@@ -111,6 +112,8 @@ function displayTotalSalesByUnit(canvasId, dataSets) {
 }
 
 /*-------------sales total per building------------------*/
+
+
 document.addEventListener('DOMContentLoaded', async (event) => {
   const data = await getData();
 
@@ -125,65 +128,6 @@ document.addEventListener('DOMContentLoaded', async (event) => {
         return result;
       }, {})
     ).map(([buildingClass, value]) => ({ buildingClass, value }));
-  };
-
-  const filterDataByMonth = (data, months) => {
-    return data.filter((item) => months.includes(new Date(item.SALE_DATE).getMonth() + 1));
-  };
-
-  const displayTrenBuilding = (chartId, chartData, label) => {
-    const ctx = document.getElementById(chartId).getContext('2d');
-
-    const chart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: chartData.map((data) => data.buildingClass),
-        datasets: [
-          {
-            data: chartData.map((data) => data.value),
-            label: 'Sale Price',
-            backgroundColor: '#a5a7f8',
-            borderColor: '#a5a7f8',
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false,
-          },
-          title: {
-            display: true,
-            text: `Total Sales ${label}`,
-            position: 'bottom',
-            padding: {
-              top: 20,
-              bottom: 10,
-            },
-          },
-          tooltip: {
-            callbacks: {
-              label: function (context) {
-                return `${context.dataset.label}: ${context.raw}`;
-              },
-            },
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: 'Total Sales',
-            },
-          },
-        },
-      },
-    });
-
-    return chart; 
   };
 
   const filteredDataFebMar = filterDataByMonth(data, [2, 3]);
@@ -201,11 +145,63 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     .sort((a, b) => b.value - a.value)
     .slice(0, 5);
 
-  // Menggunakan objek Chart yang dibuat
   displayTrenBuilding('chartTrenBuilding1', topBuildingClassesFebMar, 'Feb-Mar');
   displayTrenBuilding('chartTrenBuilding2', topBuildingClassesMarApr, 'Mar-Apr');
   displayTrenBuilding('chartTrenBuilding3', topBuildingClassesJulAug, 'Jul-Aug');
 });
+
+function displayTrenBuilding(chartId, chartData, label) {
+  const ctx = document.getElementById(chartId).getContext('2d');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: chartData.map((data) => data.buildingClass),
+      datasets: [
+        {
+          data: chartData.map((data) => data.value),
+          label: 'Sale Price',
+          backgroundColor: '#a5a7f8',
+          borderColor: '#a5a7f8',
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+        },
+        title: {
+          display: true,
+          text: `Total Sales ${label}`,
+          position: 'bottom',
+          padding: {
+            top: 20,
+            bottom: 10,
+          },
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return `${context.dataset.label}: ${context.raw}`;
+            },
+          },
+        },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Total Sales',
+          },
+        },
+      },
+    },
+  });
+}
 
 if (!Object.groupBy) {
   Object.groupBy = function (array, keyFunc) {
@@ -219,6 +215,8 @@ if (!Object.groupBy) {
     }, {});
   };
 }
+
+
 
 /*--------------------TABLE DATA----------------*/
 
