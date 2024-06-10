@@ -1,450 +1,432 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NYC - Property Sales</title>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NYC - Property Sales</title>
 
-    <!-- My Icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
 
-    <!-- Style CSS -->
-    <link rel="stylesheet" href="css/style.css" />
+  <!-- My Icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-    <!-- My JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/script.js"></script>
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="css/style.css" />
 
-    <!-- Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet" />
-  </head>
+  <!-- My JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/script.js"></script>
 
-  <body>
-    <!-- navbar start -->
-    <nav class="navbar">
-      <div class="navbar-left">
-        <img src="images/logo.png" alt="team 12 Section Jakarta" class="navbar-logo-img" />
-        <a href="#" class="navbar-logo">NYC <span>Property Sales</span></a>
-      </div>
-      <div class="navbar-nav">
-        <a href="#About">About</a>
-        <div class="dropdown">
-          <a href="#Data" class="dropbtn">Data &#9662;</a>
-          <div id="DataContent" class="dropdown-content">
-            <a href="#SalesTotalperBorough">Sales Total per Borough</a>
-            <a href="#SalesTrendperMonth">Sales Trend per Month</a>
-            <a href="#Top5BuildingClassCategory">Top 5 Building Class Category</a>
-            <a href="#SalesTotalperUnitType">Sales Total per Unit Type</a>
-            <a href="#SalesTotalperBuildingClassCategory">Sales Total per Building Class Category</a>
-          </div>
-        </div>
-        <a href="#DataTable" class="dropbtn">DataTable</a>
-        <a href="#Teams">Teams</a>
-      </div>
-    </nav>
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+    rel="stylesheet" />
+</head>
 
-    <!-- navbar end -->
-
-    <!-- Hero Section Start -->
-    <section class="hero" id="home">
-      <main class="content" id="About">
-        <h1>About</h1>
-        <p>"Explore property sales trends in Staten Island and discover key information such as average prices and other important statistics to help you make better property investment decisions in this borough."</p>
-      </main>
-    </section>
-    <!-- Hero Section End -->
-
-    <div class="row">
-      <div class="col-3">
-        <div class="item">
-          <h4>Total Sales Staten Island</h4>
-          <p>4,727,354,272</p>
+<body>
+  <!-- navbar start -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <img src="images/logo.png" alt="team 12 Section Jakarta" class="navbar-logo-img" />
+      <a href="#" class="navbar-logo">NYC <span>Property Sales</span></a>
+    </div>
+    <div class="navbar-nav">
+      <a href="#About">About</a>
+      <div class="dropdown">
+        <a href="#Data" class="dropbtn">Data &#9662;</a>
+        <div id="DataContent" class="dropdown-content">
+          <a href="#SalesTotalperBorough">Sales Total per Borough</a>
+          <a href="#SalesTrendperMonth">Sales Trend per Month</a>
+          <a href="#Top5BuildingClassCategory">Top 5 Building Class Category</a>
+          <a href="#SalesTotalperUnitType">Sales Total per Unit Type</a>
+          <a href="#SalesTotalperBuildingClassCategory">Sales Total per Building Class Category</a>
         </div>
       </div>
-      <div class="col-3">
-        <div class="item">
-          <h4>Residential Units</h4>
-          <p>7,509</p>
-        </div>
-      </div>
-      <div class="col-3">
-        <div class="item">
-          <h4>Commercial Units</h4>
-          <p>501</p>
-        </div>
-      </div>
-      <div class="col-3">
-        <div class="item">
-          <h4>Building Class</h4>
-          <p>26</p>
-        </div>
+      <a href="#DataTable" class="dropbtn">Data Table</a>
+      <a href="#Teams">Teams</a>
+    </div>
+  </nav>
+
+  <!-- navbar end -->
+
+  <!-- Hero Section Start -->
+  <section class="hero" id="home">
+    <main class="content" id="About">
+      <h1>About</h1>
+      <p>"Explore property sales trends in Staten Island and discover key information such as average prices and other
+        important statistics to help you make better property investment decisions in this borough."</p>
+    </main>
+  </section>
+  <!-- Hero Section End -->
+
+  <div class="row">
+    <div class="col-3">
+      <div class="item">
+        <h4>Total Sales Staten Island</h4>
+        <p>4,727,354,272</p>
       </div>
     </div>
-
-    <div class="col-12">
-      <div class="chart-item" id="SalesTotalperBorough">
-        <h4>SALES TOTAL PER BOROUGH</h4>
-        <div class="filter">
-          <label for="monthSelect">Select Month:</label>
-          <select id="monthSelect">
-            <option value="all">All</option>
-            <option value="2016-09">September 2016</option>
-            <option value="2016-10">October 2016</option>
-            <option value="2016-11">November 2016</option>
-            <option value="2016-12">December 2016</option>
-            <option value="2017-01">January 2017</option>
-            <option value="2017-02">February 2017</option>
-            <option value="2017-03">March 2017</option>
-            <option value="2017-04">April 2017</option>
-            <option value="2017-05">May 2017</option>
-            <option value="2017-06">June 2017</option>
-            <option value="2017-07">July 2017</option>
-            <option value="2017-08">August 2017</option>
-          </select>
-        </div>
-        <canvas id="chartTotalSalesByBorough" height="100px"></canvas>
+    <div class="col-3">
+      <div class="item">
+        <h4>Residential Units</h4>
+        <p>7,509</p>
       </div>
     </div>
-
-    <div class="titleborough">
-      <h1 style="text-align: center">Staten Island Borough</h1>
-    </div>
-
-    <div class="col-12">
-      <div class="chart-item" id="SalesTrendperMonth">
-        <h4>SALES TREND PER MONTH</h4>
-        <canvas id="lineChartSalesTrend" height="100px"></canvas>
+    <div class="col-3">
+      <div class="item">
+        <h4>Commercial Units</h4>
+        <p>501</p>
       </div>
     </div>
+    <div class="col-3">
+      <div class="item">
+        <h4>Building Class</h4>
+        <p>26</p>
+      </div>
+    </div>
+  </div>
 
+  <div class="filter" style="text-align: right;">
+    <label for="monthSelect">Select Month:</label>
+    <select id="monthSelect">
+      <option value="all">All</option>
+      <option value="2016-09">September 2016</option>
+      <option value="2016-10">October 2016</option>
+      <option value="2016-11">November 2016</option>
+      <option value="2016-12">December 2016</option>
+      <option value="2017-01">January 2017</option>
+      <option value="2017-02">February 2017</option>
+      <option value="2017-03">March 2017</option>
+      <option value="2017-04">April 2017</option>
+      <option value="2017-05">May 2017</option>
+      <option value="2017-06">June 2017</option>
+      <option value="2017-07">July 2017</option>
+      <option value="2017-08">August 2017</option>
+    </select>
+  </div>
+  <div class="col-8">
+    <div class="chart-item" id="SalesTotalperBorough">
+      <h4>SALES TOTAL PER BOROUGH</h4>
+      <canvas id="chartTotalSalesByBorough"></canvas>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="chart-item" id="Top5BuildingClassCategory">
+      <h4>TOP 5 </h4>
+      <p>BUILDING CLASS CATEGORY</p>
+      <canvas id="PieChartTop5"></canvas>
+    </div>
+  </div>
+
+  <!-- <div class="col-12">
+    <h1 style="text-align: center">STATEN ISLAND BOROUGH</h1>
+  </div> -->
+  <div class="col-6">
+    <div class="chart-item" id="SalesTrendperMonth">
+      <h4>TREN PENJUALAN PER BULAN</h4>
+      <label for="buildingClassFilter">Select Building Class:</label>
+      <select id="buildingClassFilter">
+        <option value="all">All</option>
+      </select>
+      <canvas id="lineChartSalesTrend"></canvas>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="chart-item" id="SalesTotalperUnitType">
+      <h4>SALES TOTAL PER UNIT TYPE</h4>
+      <canvas id="ChartTrendPerUnit" height="163px"></canvas>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-4">
-      <div class="chart-item" id="Top5BuildingClassCategory">
-        <h4>TOP 5 BUILDING CLASS</h4>
-        <canvas id="PieChartTop5"></canvas>
+      <div class="chart-item" id="SalesTotalperBuildingClassCategory">
+        <h4>SALES TOTAL PER BUILDING CLASS CATEGORY </h4>
+        <canvas id="chartTrenBuilding1" height="300px"></canvas>
       </div>
     </div>
-
-    <!-- <select id="buildingFilter" onchange="updateChart()">
-              <option value="All">All</option>
-              <option value="27 FACTORIES">Factories</option>
-              <option value="30 WAREHOUSES">Warehouses</option>
-              <option value="26 OTHER HOTELS">Other Hotels</option>
-              <option value="44 CONDO PARKING">Condo Parking</option>
-              <option value="22 STORE BUILDINGS">Store Buildings</option>
-              <option value="21 OFFICE BUILDINGS">Office Buildings</option>
-              <option value="38 ASYLUMS AND HOMES">Asylums and Homes</option>
-              <option value="04 TAX CLASS 1 CONDOS">Tax Class 1 Condos</option>
-              <option value="29 COMMERCIAL GARAGES">Commercial Garages</option>
-              <option value="06 TAX CLASS 1 - OTHER">Tax Class 1 - Other</option>
-              <option value="14 RENTALS - 4-10 UNIT">Rentals - 4-10 Unit</option>
-              <option value="01 ONE FAMILY DWELLINGS">One Family Dwellings</option>
-              <option value="02 TWO FAMILY DWELLINGS">Two Family Dwellings</option>
-              <option value="37 RELIGIOUS FACILITIES">Religious Facilities</option>
-              <option value="46 CONDO STORE BUILDINGS">Condo Store Buildings</option>
-              <option value="03 THREE FAMILY DWELLINGS">Three Family Dwellings</option>
-              <option value="31 COMMERCIAL VACANT LAND">Commercial Vacant Land</option>
-              <option value="33 EDUCATIONAL FACILITIES">Educational Facilities</option>
-              <option value="43 CONDO OFFICE BUILDINGS">Condo Office Buildings</option>
-              <option value="05 TAX CLASS 1 VACANT LAND">Tax Class 1 Vacant Land</option>
-              <option value="09 COOPS - WALKUP APARTMENTS">Coops - Walkup Apartments</option>
-              <option value="12 CONDOS - WALKUP APARTMENTS">Condos - Walkup Apartments</option>
-              <option value="07 RENTALS - WALKUP APARTMENTS">Rentals - Walkup Apartments</option>
-              <option value="10 COOPS - ELEVATOR APARTMENTS">Coops - Elevator Apartments</option>
-              <option value="13 CONDOS - ELEVATOR APARTMENTS">Condos - Elevator Apartments</option>
-              <option value="35 INDOOR PUBLIC AND CULTURAL FACILITIES">Indoor Public and Cultural Facilities</option>
-          </select> -->
-
-    <div class="col-8">
-      <div class="chart-item" id="SalesTotalperUnitType">
-        <h4>SALES TOTAL PER UNIT TYPE</h4>
-        <canvas id="ChartTrendPerUnit" height="145px"></canvas>
+    <div class="col-4">
+      <div class="chart-item">
+        <h4>SALES TOTAL PER BUILDING CLASS CATEGORY</h4>
+        <canvas id="chartTrenBuilding2" height="300px"></canvas>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-4">
-        <div class="chart-item">
-          <h4>SALES TOTAL PER BUILDING CLASS CATEGORY</h4>
-          <canvas id="chartTrenBuilding1" height="300px"></canvas>
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="chart-item">
-          <h4>SALES TOTAL PER BUILDING CLASS CATEGORY</h4>
-          <canvas id="chartTrenBuilding2" height="300px"></canvas>
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="chart-item">
-          <h4>SALES TOTAL PER BUILDING CLASS CATEGORY</h4>
-          <canvas id="chartTrenBuilding3" height="300px"></canvas>
-        </div>
+    <div class="col-4">
+      <div class="chart-item">
+        <h4>SALES TOTAL PER BUILDING CLASS CATEGORY</h4>
+        <canvas id="chartTrenBuilding3" height="300px"></canvas>
       </div>
     </div>
+  </div>
 
-    <div class="row">
-      <div class="col-12">
-        <div class="chart-item" id="DataTable">
-          <h4 style="font-size: 1.5rem">DataTable</h4>
-          <div>
-            <table>
-              <thead>
-                <tr>
-                  <th id="sort-No" width="100px">No</th>
-                  <th id="sort-category">Building Class Category <span id="sort-icon-category">&#x25B2;&#x25BC;</span></th>
-                  <th id="sort-residential-units">Residential Units <span id="sort-icon-residential-units">&#x25B2;&#x25BC;</span></th>
-                  <th id="sort-commercial-units">Commercial Units <span id="sort-icon-commercial-units">&#x25B2;&#x25BC;</span></th>
-                  <th id="sort-total-sales">Total Sales <span id="sort-icon-total-sales">&#x25B2;&#x25BC;</span></th>
-                </tr>
-              </thead>
-              <tbody id="table-body"></tbody>
-            </table>
-            <div id="pagination" class="pagination"></div>
-          </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="chart-item" id="DataTable">
+        <h4 style="font-size: 1.5rem">Data Table</h4>
+        <div>
+          <table>
+            <article id="product-table">
+              <input type="text" id="table-search-input" placeholder="Search Product Detail">
         </div>
+        <thead>
+          <tr>
+            <th id="sort-No" width="100px">No</th>
+            <th id="sort-category">Building Class Category <span id="sort-icon-category">&#x25B2;&#x25BC;</span></th>
+            <th id="sort-residential-units">Residential Units <span
+                id="sort-icon-residential-units">&#x25B2;&#x25BC;</span></th>
+            <th id="sort-commercial-units">Commercial Units <span
+                id="sort-icon-commercial-units">&#x25B2;&#x25BC;</span></th>
+            <th id="sort-total-sales">Total Sales <span id="sort-icon-total-sales">&#x25B2;&#x25BC;</span></th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+        </table>
+        <div id="pagination" class="pagination"></div>
       </div>
     </div>
+  </div>
+  </div>
 
-    <!-- services -->
-    <div>
-      <div class="footer-text">
-        <h1>Our Teams</h1>
-        <p>Allow us to introduce ourselves</p>
+  <!-- services -->
+  <div>
+    <div class="footer-text">
+      <h1>Our Teams</h1>
+      <p>Allow us to introduce ourselves</p>
+    </div>
+    <!-- Section Team -->
+    <section class="team" id="Teams"></section>
+    <div class="container">
+      <!-- Raihan -->
+      <div class="box">
+        <div class="top-bar"></div>
+        <div class="nav">
+          <i class="verify fas fa-check-circle"></i>
+          <input type="checkbox" class="heart-btn" id="heart-btn" />
+          <label class="heart"></label>
+        </div>
+        <div class="details">
+          <img src="images/team/Raihan.jpg" alt="" />
+          <strong>Raihan Fadhilah</strong>
+          <p>Team Leader</p>
+        </div>
+        <div class="btn">
+          <a href="##"><i class="fab fa-facebook-f"></i></a>
+          <a href="##"><i class="fab fa-instagram"></i></a>
+          <a href="##"><i class="fab fa-twitter"></i></a>
+        </div>
       </div>
-      <!-- Section Team -->
-      <section class="team" id="Teams"></section>
-      <div class="container">
-        <!-- Raihan -->
-        <div class="box">
-          <div class="top-bar"></div>
-          <div class="nav">
-            <i class="verify fas fa-check-circle"></i>
-            <input type="checkbox" class="heart-btn" id="heart-btn" />
-            <label class="heart"></label>
-          </div>
-          <div class="details">
-            <img src="images/team/Raihan.jpg" alt="" />
-            <strong>Raihan Fadhilah</strong>
-            <p>Team Leader</p>
-          </div>
-          <div class="btn">
-            <a href="##"><i class="fab fa-facebook-f"></i></a>
-            <a href="##"><i class="fab fa-instagram"></i></a>
-            <a href="##"><i class="fab fa-twitter"></i></a>
-          </div>
+      <!-- Habsi -->
+      <div class="box">
+        <div class="top-bar"></div>
+        <div class="nav">
+          <i class="verify fas fa-check-circle"></i>
+          <input type="checkbox" class="heart-btn" id="heart-btn" />
+          <label class="heart"></label>
         </div>
-        <!-- Habsi -->
-        <div class="box">
-          <div class="top-bar"></div>
-          <div class="nav">
-            <i class="verify fas fa-check-circle"></i>
-            <input type="checkbox" class="heart-btn" id="heart-btn" />
-            <label class="heart"></label>
-          </div>
-          <div class="details">
-            <img src="images/team/Habsi.jpg" alt="" />
-            <strong>Habsi Bintang </strong>
-            <p>Front End Engineer</p>
-          </div>
-          <div class="btn">
-            <a href="##"><i class="fab fa-facebook-f"></i></a>
-            <a href="##"><i class="fab fa-instagram"></i></a>
-            <a href="##"><i class="fab fa-twitter"></i></a>
-          </div>
+        <div class="details">
+          <img src="images/team/Habsi.jpg" alt="" />
+          <strong>Habsi Bintang </strong>
+          <p>Front End Engineer</p>
         </div>
-        <!-- Pepep -->
-        <div class="box">
-          <div class="top-bar"></div>
-          <div class="nav">
-            <i class="verify fas fa-check-circle"></i>
-            <input type="checkbox" class="heart-btn" id="heart-btn" />
-            <label class="heart"></label>
-          </div>
-          <div class="details">
-            <img src="images/team/Pepep.jpg" alt="" />
-            <strong>Pepep Febriansyah</strong>
-            <p>Front End Engineer</p>
-          </div>
-          <div class="btn">
-            <a href="##"><i class="fab fa-facebook-f"></i></a>
-            <a href="##"><i class="fab fa-instagram"></i></a>
-            <a href="##"><i class="fab fa-twitter"></i></a>
-          </div>
+        <div class="btn">
+          <a href="##"><i class="fab fa-facebook-f"></i></a>
+          <a href="##"><i class="fab fa-instagram"></i></a>
+          <a href="##"><i class="fab fa-twitter"></i></a>
         </div>
-        <!-- Ulfitasari -->
-        <div class="box">
-          <div class="top-bar"></div>
-          <div class="nav">
-            <i class="verify fas fa-check-circle"></i>
-            <input type="checkbox" class="heart-btn" id="heart-btn" />
-            <label class="heart"></label>
-          </div>
-          <div class="details">
-            <img src="images/team/Ulfii.jpg" alt="" />
-            <strong>Ulfitasari</strong>
-            <p>Front End Engineer</p>
-          </div>
-          <div class="btn">
-            <a href="##"><i class="fab fa-facebook-f"></i></a>
-            <a href="##"><i class="fab fa-instagram"></i></a>
-            <a href="##"><i class="fab fa-twitter"></i></a>
-          </div>
+      </div>
+      <!-- Pepep -->
+      <div class="box">
+        <div class="top-bar"></div>
+        <div class="nav">
+          <i class="verify fas fa-check-circle"></i>
+          <input type="checkbox" class="heart-btn" id="heart-btn" />
+          <label class="heart"></label>
         </div>
-        <!-- Yusuf Habibulloh -->
-        <div class="box">
-          <div class="top-bar"></div>
-          <div class="nav">
-            <i class="verify fas fa-check-circle"></i>
-            <input type="checkbox" class="heart-btn" id="heart-btn" />
-            <label class="heart"></label>
-          </div>
-          <div class="details">
-            <img src="images/team/Yusuf.jpg" alt="" />
-            <strong>Yusuf Habibulloh </strong>
-            <p>Front End Engineer</p>
-          </div>
-          <div class="btn">
-            <a href="##"><i class="fab fa-facebook-f"></i></a>
-            <a href="##"><i class="fab fa-instagram"></i></a>
-            <a href="##"><i class="fab fa-twitter"></i></a>
-          </div>
+        <div class="details">
+          <img src="images/team/Pepep.jpg" alt="" />
+          <strong>Pepep Febriansyah</strong>
+          <p>Front End Engineer</p>
         </div>
-        <!-- Vanka Alba -->
-        <div class="box">
-          <div class="top-bar"></div>
-          <div class="nav">
-            <i class="verify fas fa-check-circle"></i>
-            <input type="checkbox" class="heart-btn" id="heart-btn" />
-            <label class="heart"></label>
-          </div>
-          <div class="details">
-            <img src="images/team/Vanka.jpg" alt="" />
-            <strong>Vanka Alba</strong>
-            <p>Deployment Team</p>
-          </div>
-          <div class="btn">
-            <a href="##"><i class="fab fa-facebook-f"></i></a>
-            <a href="##"><i class="fab fa-instagram"></i></a>
-            <a href="##"><i class="fab fa-twitter"></i></a>
-          </div>
+        <div class="btn">
+          <a href="##"><i class="fab fa-facebook-f"></i></a>
+          <a href="##"><i class="fab fa-instagram"></i></a>
+          <a href="##"><i class="fab fa-twitter"></i></a>
         </div>
-        <!-- Ida Masluha -->
-        <div class="box">
-          <div class="top-bar"></div>
-          <div class="nav">
-            <i class="verify fas fa-check-circle"></i>
-            <input type="checkbox" class="heart-btn" id="heart-btn" />
-            <label class="heart"></label>
-          </div>
-          <div class="details">
-            <img src="images/team/Ida.jpg" alt="" />
-            <strong>Ida Masluha </strong>
-            <p>Pitch Deck Team</p>
-          </div>
-          <div class="btn">
-            <a href="##"><i class="fab fa-facebook-f"></i></a>
-            <a href="##"><i class="fab fa-instagram"></i></a>
-            <a href="##"><i class="fab fa-twitter"></i></a>
-          </div>
+      </div>
+      <!-- Ulfitasari -->
+      <div class="box">
+        <div class="top-bar"></div>
+        <div class="nav">
+          <i class="verify fas fa-check-circle"></i>
+          <input type="checkbox" class="heart-btn" id="heart-btn" />
+          <label class="heart"></label>
         </div>
-        <!-- Ravitilova -->
-        <div class="box">
-          <div class="top-bar"></div>
-          <div class="nav">
-            <i class="verify fas fa-check-circle"></i>
-            <input type="checkbox" class="heart-btn" id="heart-btn" />
-            <label class="heart"></label>
-          </div>
-          <div class="details">
-            <img src="images/team/Lova.jpg" alt="" />
-            <strong>Ravitilova</strong>
-            <p>Pitch Deck Team</p>
-          </div>
-          <div class="btn">
-            <a href="##"><i class="fab fa-facebook-f"></i></a>
-            <a href="##"><i class="fab fa-instagram"></i></a>
-            <a href="##"><i class="fab fa-twitter"></i></a>
-          </div>
+        <div class="details">
+          <img src="images/team/Ulfii.jpg" alt="" />
+          <strong>Ulfitasari</strong>
+          <p>Front End Engineer</p>
         </div>
-        <!-- Shalsa -->
-        <div class="box">
-          <div class="top-bar"></div>
-          <div class="nav">
-            <i class="verify fas fa-check-circle"></i>
-            <input type="checkbox" class="heart-btn" id="heart-btn" />
-            <label class="heart"></label>
-          </div>
-          <div class="details">
-            <img src="images/team/Shalsa.jpg" alt="" />
-            <strong>Shalsa Salisa Az Zahra</strong>
-            <p>Pitch Deck Team</p>
-          </div>
-          <div class="btn">
-            <a href="##"><i class="fab fa-facebook-f"></i></a>
-            <a href="##"><i class="fab fa-instagram"></i></a>
-            <a href="##"><i class="fab fa-twitter"></i></a>
-          </div>
+        <div class="btn">
+          <a href="##"><i class="fab fa-facebook-f"></i></a>
+          <a href="##"><i class="fab fa-instagram"></i></a>
+          <a href="##"><i class="fab fa-twitter"></i></a>
         </div>
-        <!-- Fidela -->
-        <div class="box">
-          <div class="top-bar"></div>
-          <div class="nav">
-            <i class="verify fas fa-check-circle"></i>
-            <input type="checkbox" class="heart-btn" id="heart-btn" />
-            <label class="heart"></label>
-          </div>
-          <div class="details">
-            <img src="images/team/Fidela.jpg" alt="" />
-            <strong>Fidela Citra Imanda</strong>
-            <p>Quality Assurance</p>
-          </div>
-          <div class="btn">
-            <a href="##"><i class="fab fa-facebook-f"></i></a>
-            <a href="##"><i class="fab fa-instagram"></i></a>
-            <a href="##"><i class="fab fa-twitter"></i></a>
-          </div>
+      </div>
+      <!-- Yusuf Habibulloh -->
+      <div class="box">
+        <div class="top-bar"></div>
+        <div class="nav">
+          <i class="verify fas fa-check-circle"></i>
+          <input type="checkbox" class="heart-btn" id="heart-btn" />
+          <label class="heart"></label>
         </div>
-        <!-- Muhdad -->
-        <div class="box">
-          <div class="top-bar"></div>
-          <div class="nav">
-            <i class="verify fas fa-check-circle"></i>
-            <input type="checkbox" class="heart-btn" id="heart-btn" />
-            <label class="heart"></label>
-          </div>
-          <div class="details">
-            <img src="images/team/Muhdad.jpg" alt="" />
-            <strong>Muhdad Alfaris Bachmid</strong>
-            <p>Quality Assurance</p>
-          </div>
-          <div class="btn">
-            <a href="##"><i class="fab fa-facebook-f"></i></a>
-            <a href="##"><i class="fab fa-instagram"></i></a>
-            <a href="##"><i class="fab fa-twitter"></i></a>
-          </div>
+        <div class="details">
+          <img src="images/team/Yusuf.jpg" alt="" />
+          <strong>Yusuf Habibulloh </strong>
+          <p>Front End Engineer</p>
+        </div>
+        <div class="btn">
+          <a href="##"><i class="fab fa-facebook-f"></i></a>
+          <a href="##"><i class="fab fa-instagram"></i></a>
+          <a href="##"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <!-- Vanka Alba -->
+      <div class="box">
+        <div class="top-bar"></div>
+        <div class="nav">
+          <i class="verify fas fa-check-circle"></i>
+          <input type="checkbox" class="heart-btn" id="heart-btn" />
+          <label class="heart"></label>
+        </div>
+        <div class="details">
+          <img src="images/team/Vanka.jpg" alt="" />
+          <strong>Vanka Alba</strong>
+          <p>Deployment Team</p>
+        </div>
+        <div class="btn">
+          <a href="##"><i class="fab fa-facebook-f"></i></a>
+          <a href="##"><i class="fab fa-instagram"></i></a>
+          <a href="##"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <!-- Ida Masluha -->
+      <div class="box">
+        <div class="top-bar"></div>
+        <div class="nav">
+          <i class="verify fas fa-check-circle"></i>
+          <input type="checkbox" class="heart-btn" id="heart-btn" />
+          <label class="heart"></label>
+        </div>
+        <div class="details">
+          <img src="images/team/Ida.jpg" alt="" />
+          <strong>Ida Masluha </strong>
+          <p>Pitch Deck Team</p>
+        </div>
+        <div class="btn">
+          <a href="##"><i class="fab fa-facebook-f"></i></a>
+          <a href="##"><i class="fab fa-instagram"></i></a>
+          <a href="##"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <!-- Ravitilova -->
+      <div class="box">
+        <div class="top-bar"></div>
+        <div class="nav">
+          <i class="verify fas fa-check-circle"></i>
+          <input type="checkbox" class="heart-btn" id="heart-btn" />
+          <label class="heart"></label>
+        </div>
+        <div class="details">
+          <img src="images/team/Lova.jpg" alt="" />
+          <strong>Ravitilova</strong>
+          <p>Pitch Deck Team</p>
+        </div>
+        <div class="btn">
+          <a href="##"><i class="fab fa-facebook-f"></i></a>
+          <a href="##"><i class="fab fa-instagram"></i></a>
+          <a href="##"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <!-- Shalsa -->
+      <div class="box">
+        <div class="top-bar"></div>
+        <div class="nav">
+          <i class="verify fas fa-check-circle"></i>
+          <input type="checkbox" class="heart-btn" id="heart-btn" />
+          <label class="heart"></label>
+        </div>
+        <div class="details">
+          <img src="images/team/Shalsa.jpg" alt="" />
+          <strong>Shalsa Salisa Az Zahra</strong>
+          <p>Pitch Deck Team</p>
+        </div>
+        <div class="btn">
+          <a href="##"><i class="fab fa-facebook-f"></i></a>
+          <a href="##"><i class="fab fa-instagram"></i></a>
+          <a href="##"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <!-- Fidela -->
+      <div class="box">
+        <div class="top-bar"></div>
+        <div class="nav">
+          <i class="verify fas fa-check-circle"></i>
+          <input type="checkbox" class="heart-btn" id="heart-btn" />
+          <label class="heart"></label>
+        </div>
+        <div class="details">
+          <img src="images/team/Fidela.jpg" alt="" />
+          <strong>Fidela Citra Imanda</strong>
+          <p>Quality Assurance</p>
+        </div>
+        <div class="btn">
+          <a href="##"><i class="fab fa-facebook-f"></i></a>
+          <a href="##"><i class="fab fa-instagram"></i></a>
+          <a href="##"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <!-- Muhdad -->
+      <div class="box">
+        <div class="top-bar"></div>
+        <div class="nav">
+          <i class="verify fas fa-check-circle"></i>
+          <input type="checkbox" class="heart-btn" id="heart-btn" />
+          <label class="heart"></label>
+        </div>
+        <div class="details">
+          <img src="images/team/Muhdad.jpg" alt="" />
+          <strong>Muhdad Alfaris Bachmid</strong>
+          <p>Quality Assurance</p>
+        </div>
+        <div class="btn">
+          <a href="##"><i class="fab fa-facebook-f"></i></a>
+          <a href="##"><i class="fab fa-instagram"></i></a>
+          <a href="##"><i class="fab fa-twitter"></i></a>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Section Team End -->
+  <!-- Section Team End -->
 
-    <!-- Footer Start -->
+  <!-- Footer Start -->
 
-    <footer>
-      <div class="waves">
-        <div class="wave" id="wave1"></div>
-        <div class="wave" id="wave2"></div>
-        <div class="wave" id="wave3"></div>
-        <div class="wave" id="wave4"></div>
-      </div>
-      <p>Created by Team 12 - Section Jakarta | © 2024.</p>
-    </footer>
+  <footer>
+    <div class="waves">
+      <div class="wave" id="wave1"></div>
+      <div class="wave" id="wave2"></div>
+      <div class="wave" id="wave3"></div>
+      <div class="wave" id="wave4"></div>
+    </div>
+    <p>Created by Team 12 - Section Jakarta | © 2024.</p>
+  </footer>
 
-    <!-- Footer End -->
-  </body>
+  <!-- Footer End -->
+</body>
+
 </html>
