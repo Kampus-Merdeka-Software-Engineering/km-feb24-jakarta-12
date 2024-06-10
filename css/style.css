@@ -248,10 +248,8 @@ body {
     align-items: flex-start;
   }
 
-  .dropdown-content {
-    position: static;
-    width: 100%;
-    box-shadow: none;
+  .dropdown .dropdown-content a{
+    font-size: 0.8rem;
   }
 
   .dropdown-content label {
