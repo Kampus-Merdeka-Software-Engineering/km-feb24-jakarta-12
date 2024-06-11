@@ -15,10 +15,6 @@ const filterDataByMonth = (data, months) => {
   });
 };
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const data = await getData();
-});
-
 /*-------------sales total per unit------------------*/
 
 document.addEventListener('DOMContentLoaded', async (event) => {
